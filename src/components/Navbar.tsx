@@ -21,8 +21,8 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const navLinks: { label: string; screen: ActiveScreen }[] = [
     { label: 'Home', screen: 'home' },
-    { label: 'Fuel', screen: 'fuel' },
     { label: 'Store', screen: 'store' },
+    { label: 'Science', screen: 'fuel' },
     { label: 'Contact', screen: 'contact' },
   ];
 
