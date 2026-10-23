@@ -180,7 +180,7 @@ export default function App() {
           <>
             <StoreScreen
               products={PRODUCTS}
-              onAddToCart={(p, isSub) => handleAddToCart(p, isSub, 1)}
+              onAddToCart={(p, isSub, qty) => handleAddToCart(p, isSub, qty || 1)}
               onViewProduct={(p) => setSelectedProduct(p)}
             />
             <Testimonials />
