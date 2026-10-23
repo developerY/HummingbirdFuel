@@ -1,44 +1,74 @@
-import React, { useState } from 'react';
-import { ActiveScreen } from '../types';
+import React, { useState, useRef, useEffect } from 'react';
+import { RouteState, buildAbsoluteUrl } from '../utils/router';
 
 interface NavbarProps {
-  activeScreen: ActiveScreen;
-  onNavigate: (screen: ActiveScreen) => void;
+  currentRoute: RouteState;
+  onNavigateRoute: (route: RouteState) => void;
   cartCount: number;
   onOpenCart: () => void;
   onOpenProfile: () => void;
-  onOpenDosimeter?: () => void;
+  onOpenCommandPalette: () => void;
+  onShowToast: (message: string) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  activeScreen,
-  onNavigate,
+  currentRoute,
+  onNavigateRoute,
   cartCount,
   onOpenCart,
   onOpenProfile,
+  onOpenCommandPalette,
+  onShowToast,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scienceMenuOpen, setScienceMenuOpen] = useState(false);
+  const [storeMenuOpen, setStoreMenuOpen] = useState(false);
+  const [mobileScienceExpanded, setMobileScienceExpanded] = useState(true);
+  const [mobileStoreExpanded, setMobileStoreExpanded] = useState(false);
 
-  const navLinks: { label: string; screen: ActiveScreen }[] = [
-    { label: 'Home', screen: 'home' },
-    { label: 'Store', screen: 'store' },
-    { label: 'Science', screen: 'fuel' },
-    { label: 'Contact', screen: 'contact' },
-  ];
+  const scienceMenuRef = useRef<HTMLDivElement>(null);
+  const storeMenuRef = useRef<HTMLDivElement>(null);
 
-  const handleNavClick = (screen: ActiveScreen) => {
-    onNavigate(screen);
+  // Close menus on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (scienceMenuRef.current && !scienceMenuRef.current.contains(e.target as Node)) {
+        setScienceMenuOpen(false);
+      }
+      if (storeMenuRef.current && !storeMenuRef.current.contains(e.target as Node)) {
+        setStoreMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleNavigate = (route: RouteState) => {
+    onNavigateRoute(route);
     setMobileMenuOpen(false);
+    setScienceMenuOpen(false);
+    setStoreMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleCopyLink = (e: React.MouseEvent, route: RouteState) => {
+    e.stopPropagation();
+    const fullUrl = buildAbsoluteUrl(route);
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      onShowToast(`Deep link copied: ${fullUrl}`);
+    });
+  };
+
+  const isScienceActive = currentRoute.screen === 'fuel';
+  const isStoreActive = currentRoute.screen === 'store';
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[#121318]/90 backdrop-blur-xl border-b border-[#282a36]/60 shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#121318]/95 backdrop-blur-xl border-b border-[#282a36]/60 shadow-[0_1px_12px_rgba(0,0,0,0.6)]">
       <div className="h-20 w-full max-w-[1280px] mx-auto px-5 md:px-12 flex items-center justify-between gap-4">
         {/* Brand & Badge Zone */}
         <div className="flex items-center gap-4">
           <button
-            onClick={() => handleNavClick('home')}
+            onClick={() => handleNavigate({ screen: 'home' })}
             className="flex items-center gap-2 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5a1f] rounded"
           >
             <img
@@ -54,38 +84,330 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1c1b1d] border border-[#282a36]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a1f] animate-pulse"></span>
             <span className="font-['JetBrains_Mono'] text-[10px] text-[#e4beb3] uppercase tracking-widest">
-              AI Microdose Spray
+              AI Cyber-Physical Delivery
             </span>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
+        {/* Desktop Navigation Links with Subpage Mega Flyouts */}
+        <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+          {/* Home */}
+          <button
+            onClick={() => handleNavigate({ screen: 'home' })}
+            className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-1 focus:outline-none ${
+              currentRoute.screen === 'home'
+                ? 'text-[#ff5a1f] font-semibold'
+                : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
+            }`}
+          >
+            Home
+            {currentRoute.screen === 'home' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] rounded-full" />
+            )}
+          </button>
+
+          {/* Store with Subpage Dropdown */}
+          <div
+            ref={storeMenuRef}
+            className="relative"
+            onMouseEnter={() => setStoreMenuOpen(true)}
+            onMouseLeave={() => setStoreMenuOpen(false)}
+          >
             <button
-              key={link.screen}
-              onClick={() => handleNavClick(link.screen)}
-              className={`font-['Manrope'] text-[15px] transition-all cursor-pointer relative py-1 focus:outline-none ${
-                activeScreen === link.screen
-                  ? 'text-[#ff5a1f] font-semibold'
-                  : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
+              onClick={() => handleNavigate({ screen: 'store', subpage: 'all' })}
+              className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-1 flex items-center gap-1 focus:outline-none ${
+                isStoreActive ? 'text-[#ff5a1f] font-semibold' : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
               }`}
             >
-              {link.label}
-              {activeScreen === link.screen && (
+              <span>Store</span>
+              <span className={`material-symbols-outlined text-[16px] transition-transform duration-200 ${storeMenuOpen ? 'rotate-180 text-[#ff5a1f]' : ''}`}>
+                expand_more
+              </span>
+              {isStoreActive && (
                 <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] rounded-full" />
               )}
             </button>
-          ))}
+
+            {/* Store Subpage Dropdown Menu */}
+            {storeMenuOpen && (
+              <div className="absolute top-full left-0 mt-2 w-80 rounded-2xl bg-[#14151b] border border-[#282a36] shadow-2xl p-3 z-50 animate-fadeIn">
+                <div className="text-[10px] font-['JetBrains_Mono'] text-[#ffb59e] uppercase tracking-wider px-3 py-1.5 font-bold border-b border-[#282a36]/60 flex items-center justify-between">
+                  <span>Store Subpages &amp; Catalog</span>
+                  <span className="text-[9px] text-[#8d90a5]">Direct Deep Links</span>
+                </div>
+
+                <div className="mt-1.5 space-y-1">
+                  <button
+                    onClick={() => handleNavigate({ screen: 'store', subpage: 'all' })}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#1c1d25] transition-all flex items-start gap-3 group cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-[#ff5a1f] mt-0.5">storefront</span>
+                    <div>
+                      <div className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4] group-hover:text-[#ff5a1f]">
+                        Full Catalog &amp; 24H Kits
+                      </div>
+                      <div className="font-['Manrope'] text-[11px] text-[#8d90a5]">
+                        All circadian starter packages and hardware
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => handleNavigate({ screen: 'store', subpage: 'kit' })}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#1c1d25] transition-all flex items-start gap-3 group cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-[#ffb77f] mt-0.5">inventory_2</span>
+                    <div>
+                      <div className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4] group-hover:text-[#ffb77f]">
+                        Circadian Mastery Kits
+                      </div>
+                      <div className="font-['Manrope'] text-[11px] text-[#8d90a5]">
+                        Includes milled aviation titanium pocket case
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => handleNavigate({ screen: 'store', subpage: 'day' })}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#1c1d25] transition-all flex items-start gap-3 group cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-[#ff8a00] mt-0.5">wb_sunny</span>
+                    <div>
+                      <div className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4] group-hover:text-[#ff8a00]">
+                        AM Cognitive Day Fuel
+                      </div>
+                      <div className="font-['Manrope'] text-[11px] text-[#8d90a5]">
+                        Lion's Mane + 5mg Micro-Alkaloid Velocity
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => handleNavigate({ screen: 'store', subpage: 'night' })}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#1c1d25] transition-all flex items-start gap-3 group cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-[#00f0ff] mt-0.5">nights_stay</span>
+                    <div>
+                      <div className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4] group-hover:text-[#00f0ff]">
+                        PM Delta Night Reset
+                      </div>
+                      <div className="font-['Manrope'] text-[11px] text-[#8d90a5]">
+                        L-Theanine + Chelated Magnesium Bisglycinate
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => handleNavigate({ screen: 'store', subpage: 'refills' })}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#1c1d25] transition-all flex items-start gap-3 group cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-[#a0e8af] mt-0.5">recycling</span>
+                    <div>
+                      <div className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4] group-hover:text-[#a0e8af]">
+                        Refill Duos &amp; 3-Packs
+                      </div>
+                      <div className="font-['Manrope'] text-[11px] text-[#8d90a5]">
+                        Continuous delivery cartridge replenishments
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={() => handleNavigate({ screen: 'store', subpage: 'coa' })}
+                    className="w-full text-left p-2.5 rounded-xl hover:bg-[#1c1d25] transition-all flex items-start gap-3 group cursor-pointer"
+                  >
+                    <span className="material-symbols-outlined text-[18px] text-[#ffb59e] mt-0.5">verified_user</span>
+                    <div>
+                      <div className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4] group-hover:text-[#ffb59e]">
+                        COA Lab Verification
+                      </div>
+                      <div className="font-['Manrope'] text-[11px] text-[#8d90a5]">
+                        HPLC purity assays &amp; batch certificates
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Science Hub with Subpage Mega Dropdown */}
+          <div
+            ref={scienceMenuRef}
+            className="relative"
+            onMouseEnter={() => setScienceMenuOpen(true)}
+            onMouseLeave={() => setScienceMenuOpen(false)}
+          >
+            <button
+              onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })}
+              className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-1 flex items-center gap-1 focus:outline-none ${
+                isScienceActive ? 'text-[#ff5a1f] font-semibold' : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
+              }`}
+            >
+              <span>Science</span>
+              <span className="px-1.5 py-0.2 rounded bg-[#ff5a1f]/20 border border-[#ff5a1f]/40 text-[#ffb59e] text-[9px] font-['JetBrains_Mono'] uppercase tracking-wider">
+                Subpages
+              </span>
+              <span className={`material-symbols-outlined text-[16px] transition-transform duration-200 ${scienceMenuOpen ? 'rotate-180 text-[#ff5a1f]' : ''}`}>
+                expand_more
+              </span>
+              {isScienceActive && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] rounded-full" />
+              )}
+            </button>
+
+            {/* Science Mega Dropdown with Subpages & Deep Tabs */}
+            {scienceMenuOpen && (
+              <div className="absolute top-full -left-20 mt-2 w-[480px] rounded-2xl bg-[#14151b] border border-[#282a36] shadow-2xl p-4 z-50 animate-fadeIn">
+                <div className="text-[10px] font-['JetBrains_Mono'] text-[#ffb59e] uppercase tracking-wider px-3 py-1 font-bold border-b border-[#282a36]/60 flex items-center justify-between mb-3">
+                  <span>Science Subpage Explorer</span>
+                  <span className="text-[9px] text-[#8d90a5]">Direct URL Deep-Links</span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-3">
+                  {/* Subpage 1: Cyber-Physical Architecture */}
+                  <div className="p-3 rounded-xl bg-[#1a1b22] border border-[#ff5a1f]/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
+                        <span className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4]">
+                          Subpage 01: Cyber-Physical Systems &amp; Clinical Reality
+                        </span>
+                      </div>
+                      <button
+                        onClick={(e) => handleCopyLink(e, { screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })}
+                        title="Copy deep link to subpage"
+                        className="text-[#8d90a5] hover:text-[#ff5a1f] text-[10px] font-['JetBrains_Mono'] flex items-center gap-0.5 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[13px]">link</span>
+                        Copy Link
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-1.5 text-[11px] font-['Manrope']">
+                      <button
+                        onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })}
+                        className="p-1.5 rounded-lg bg-[#21222b] hover:bg-[#ff5a1f]/20 hover:text-[#ffb59e] text-[#8d90a5] text-left transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-[#ff5a1f]">grid_view</span>
+                        <span className="truncate">Reality Matrix</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'ingestion' })}
+                        className="p-1.5 rounded-lg bg-[#21222b] hover:bg-[#ff5a1f]/20 hover:text-[#ffb59e] text-[#8d90a5] text-left transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-[#ff5a1f]">sensors</span>
+                        <span className="truncate">Sensors &amp; Pipeline</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'algorithm' })}
+                        className="p-1.5 rounded-lg bg-[#21222b] hover:bg-[#ff5a1f]/20 hover:text-[#ffb59e] text-[#8d90a5] text-left transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-[#ff5a1f]">query_stats</span>
+                        <span className="truncate">Bateman Simulator</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'delivery' })}
+                        className="p-1.5 rounded-lg bg-[#21222b] hover:bg-[#ff5a1f]/20 hover:text-[#ffb59e] text-[#8d90a5] text-left transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-[#ff5a1f]">air</span>
+                        <span className="truncate">McCarthy Hardware</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'clinical' })}
+                        className="p-1.5 rounded-lg bg-[#21222b] hover:bg-[#ff5a1f]/20 hover:text-[#ffb59e] text-[#8d90a5] text-left transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-[#ff5a1f]">biotech</span>
+                        <span className="truncate">ADHD &amp; Oncology</span>
+                      </button>
+
+                      <button
+                        onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'regulatory' })}
+                        className="p-1.5 rounded-lg bg-[#21222b] hover:bg-[#ff5a1f]/20 hover:text-[#ffb59e] text-[#8d90a5] text-left transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-[#ff5a1f]">gavel</span>
+                        <span className="truncate">2026 FDA Engine</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Subpage 2: Sublingual Cellular Delivery */}
+                  <div className="p-3 rounded-xl bg-[#1a1b22] border border-[#00f0ff]/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-[#00f0ff]"></span>
+                        <span className="font-['Space_Grotesk'] text-xs font-bold text-[#e5e1e4]">
+                          Subpage 02: Sublingual Bio-Delivery &amp; Formulations
+                        </span>
+                      </div>
+                      <button
+                        onClick={(e) => handleCopyLink(e, { screen: 'fuel', subpage: 'delivery' })}
+                        title="Copy deep link to subpage"
+                        className="text-[#8d90a5] hover:text-[#00f0ff] text-[10px] font-['JetBrains_Mono'] flex items-center gap-0.5 cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-[13px]">link</span>
+                        Copy Link
+                      </button>
+                    </div>
+
+                    <p className="font-['Manrope'] text-[11px] text-[#8d90a5] mb-2 leading-relaxed">
+                      90-second venous bypass eliminating hepatic first-pass loss, AM/PM molecular matrix, and human wearable telemetry data.
+                    </p>
+
+                    <button
+                      onClick={() => handleNavigate({ screen: 'fuel', subpage: 'delivery' })}
+                      className="w-full py-1.5 px-3 rounded-lg bg-[#00f0ff]/10 hover:bg-[#00f0ff]/20 text-[#00f0ff] font-['JetBrains_Mono'] text-[11px] uppercase tracking-wider text-center cursor-pointer transition-colors"
+                    >
+                      Open Sublingual Bio-Delivery Page →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Contact */}
+          <button
+            onClick={() => handleNavigate({ screen: 'contact' })}
+            className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-1 focus:outline-none ${
+              currentRoute.screen === 'contact'
+                ? 'text-[#ff5a1f] font-semibold'
+                : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
+            }`}
+          >
+            Contact
+            {currentRoute.screen === 'contact' && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] rounded-full" />
+            )}
+          </button>
         </nav>
 
         {/* Action Controls Zone */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Modern Command Palette / Search Trigger (⌘K) */}
           <button
-            onClick={() => handleNavClick('store')}
+            onClick={onOpenCommandPalette}
+            aria-label="Search destinations and subpages"
+            title="Search pages, subpages, tools (⌘K)"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1c1b1d] hover:bg-[#282a36] text-[#8d90a5] hover:text-[#e5e1e4] border border-[#282a36] transition-all cursor-pointer"
+          >
+            <span className="material-symbols-outlined text-[18px] text-[#ff5a1f]">search</span>
+            <span className="hidden lg:inline font-['Manrope'] text-xs">Search...</span>
+            <kbd className="hidden sm:inline-block px-1.5 py-0.5 rounded bg-[#121318] border border-[#282a36] text-[10px] font-['JetBrains_Mono'] text-[#ffb59e]">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* Shop Direct CTA */}
+          <button
+            onClick={() => handleNavigate({ screen: 'store', subpage: 'all' })}
             className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-lg bg-[#2a2a2c] text-[#e5e1e4] hover:bg-[#39393b] font-['JetBrains_Mono'] text-xs font-semibold uppercase tracking-wider transition-all border border-[#5b4038]/40 hover:border-[#ff5a1f]/50 cursor-pointer"
           >
-            Shop Now
+            Shop Direct
           </button>
 
           {/* Cart Trigger */}
@@ -126,23 +448,177 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer Menu with Subpage Accordions */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#121318] border-b border-[#282a36] px-6 py-4 flex flex-col gap-3 animate-fadeIn">
-          {navLinks.map((link) => (
+        <div className="md:hidden bg-[#121318] border-b border-[#282a36] px-5 py-5 flex flex-col gap-4 animate-fadeIn max-h-[85vh] overflow-y-auto">
+          {/* Quick Command Palette Button for mobile */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              onOpenCommandPalette();
+            }}
+            className="w-full flex items-center justify-between p-3 rounded-xl bg-[#1c1b1d] border border-[#282a36] text-[#8d90a5]"
+          >
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-[#ff5a1f] text-[18px]">search</span>
+              <span className="font-['Manrope'] text-xs text-[#e5e1e4]">Quick Search Subpages &amp; Tools</span>
+            </div>
+            <kbd className="px-1.5 py-0.5 rounded bg-[#121318] text-[10px] font-['JetBrains_Mono'] text-[#ffb59e]">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* Primary Nav Links */}
+          <button
+            onClick={() => handleNavigate({ screen: 'home' })}
+            className={`text-left py-2 font-['Space_Grotesk'] text-lg ${
+              currentRoute.screen === 'home' ? 'text-[#ff5a1f] font-bold' : 'text-[#e5e1e4]/80'
+            }`}
+          >
+            Home
+          </button>
+
+          {/* Science Accordion */}
+          <div className="border border-[#282a36] rounded-xl p-3 bg-[#16171d]">
             <button
-              key={link.screen}
-              onClick={() => handleNavClick(link.screen)}
-              className={`text-left py-2 font-['Space_Grotesk'] text-lg transition-colors ${
-                activeScreen === link.screen ? 'text-[#ff5a1f] font-bold' : 'text-[#e5e1e4]/80'
-              }`}
+              onClick={() => setMobileScienceExpanded(!mobileScienceExpanded)}
+              className="w-full flex items-center justify-between text-left font-['Space_Grotesk'] text-base font-bold text-[#e5e1e4]"
             >
-              {link.label}
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#ff5a1f] text-[20px]">science</span>
+                <span>Science Subpages</span>
+              </div>
+              <span className={`material-symbols-outlined text-[18px] transition-transform ${mobileScienceExpanded ? 'rotate-180' : ''}`}>
+                expand_more
+              </span>
             </button>
-          ))}
+
+            {mobileScienceExpanded && (
+              <div className="mt-3 pl-2 space-y-2 border-l-2 border-[#ff5a1f]/40 font-['Manrope'] text-xs">
+                <div className="text-[10px] font-['JetBrains_Mono'] text-[#ffb59e] uppercase tracking-wider font-bold">
+                  Subpage 01 • Cyber-Physical Architecture
+                </div>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • Reality Matrix
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'ingestion' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • Sensors &amp; Pipeline
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'algorithm' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • Bateman PK/PD Simulator
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'delivery' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • Spray Kinetics &amp; McCarthy Hardware
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'clinical' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • ADHD &amp; Oncology Verticals
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'regulatory' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • 2026 FDA Section 520(o) Engine
+                </button>
+
+                <div className="pt-2 text-[10px] font-['JetBrains_Mono'] text-[#00f0ff] uppercase tracking-wider font-bold">
+                  Subpage 02 • Cellular Delivery
+                </div>
+                <button
+                  onClick={() => handleNavigate({ screen: 'fuel', subpage: 'delivery' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#00f0ff]"
+                >
+                  • Sublingual Venous Conduit &amp; Matrices
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Store Accordion */}
+          <div className="border border-[#282a36] rounded-xl p-3 bg-[#16171d]">
+            <button
+              onClick={() => setMobileStoreExpanded(!mobileStoreExpanded)}
+              className="w-full flex items-center justify-between text-left font-['Space_Grotesk'] text-base font-bold text-[#e5e1e4]"
+            >
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#ff8a00] text-[20px]">storefront</span>
+                <span>Store Catalog &amp; Subpages</span>
+              </div>
+              <span className={`material-symbols-outlined text-[18px] transition-transform ${mobileStoreExpanded ? 'rotate-180' : ''}`}>
+                expand_more
+              </span>
+            </button>
+
+            {mobileStoreExpanded && (
+              <div className="mt-3 pl-2 space-y-2 border-l-2 border-[#ff8a00]/40 font-['Manrope'] text-xs">
+                <button
+                  onClick={() => handleNavigate({ screen: 'store', subpage: 'all' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • All Products &amp; System Bundles
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'store', subpage: 'kit' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • Circadian Starter Kits &amp; Titanium Case
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'store', subpage: 'day' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • AM Cognitive Day Fuel
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'store', subpage: 'night' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • PM Delta Night Reset
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'store', subpage: 'refills' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • Cartridge Refills (3-Packs)
+                </button>
+                <button
+                  onClick={() => handleNavigate({ screen: 'store', subpage: 'coa' })}
+                  className="block w-full text-left py-1 text-[#8d90a5] hover:text-[#ff5a1f]"
+                >
+                  • COA HPLC Purity Verification
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Contact Link */}
+          <button
+            onClick={() => handleNavigate({ screen: 'contact' })}
+            className={`text-left py-2 font-['Space_Grotesk'] text-lg ${
+              currentRoute.screen === 'contact' ? 'text-[#ff5a1f] font-bold' : 'text-[#e5e1e4]/80'
+            }`}
+          >
+            Contact
+          </button>
+
+          {/* Bottom Action */}
           <div className="pt-2 border-t border-[#282a36] flex flex-col gap-2">
             <button
-              onClick={() => handleNavClick('store')}
+              onClick={() => handleNavigate({ screen: 'store', subpage: 'all' })}
               className="w-full py-2.5 rounded-lg bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] text-[#0e0e10] font-['Space_Grotesk'] font-bold uppercase tracking-wider text-sm text-center"
             >
               Shop Direct Catalog

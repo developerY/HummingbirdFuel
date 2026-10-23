@@ -1,19 +1,56 @@
-import React, { useState } from 'react';
-import { CyberPhysicalScienceSubpage } from './CyberPhysicalScienceSubpage';
+import React, { useState, useEffect } from 'react';
+import { CyberPhysicalScienceSubpage, CyberPhysicalSubTab } from './CyberPhysicalScienceSubpage';
+import { buildAbsoluteUrl } from '../utils/router';
 
 interface ScienceScreenProps {
   onOrderClick: () => void;
   onSimulateSpray: () => void;
+  activeSubpage?: string;
+  activeSubtab?: string;
+  onNavigateSubpage?: (subpage: string, subtab?: string) => void;
+  onShowToast?: (message: string) => void;
 }
 
 export const ScienceScreen: React.FC<ScienceScreenProps> = ({
   onOrderClick,
-  onSimulateSpray
+  onSimulateSpray,
+  activeSubpage,
+  activeSubtab,
+  onNavigateSubpage,
+  onShowToast,
 }) => {
-  const [scienceSubpage, setScienceSubpage] = useState<'cyberphysical' | 'delivery'>('cyberphysical');
+  const [scienceSubpage, setScienceSubpage] = useState<'cyberphysical' | 'delivery'>(
+    activeSubpage === 'delivery' ? 'delivery' : 'cyberphysical'
+  );
   const [activeComparison, setActiveComparison] = useState<'spray' | 'capsule' | 'drink'>('spray');
   const [activePathwayTab, setActivePathwayTab] = useState<'sublingual' | 'gastric'>('sublingual');
   const [activeIngredientPillar, setActiveIngredientPillar] = useState<'day' | 'night'>('day');
+
+  useEffect(() => {
+    if (activeSubpage === 'delivery' || activeSubpage === 'cyberphysical') {
+      setScienceSubpage(activeSubpage);
+    }
+  }, [activeSubpage]);
+
+  const handleSubpageSwitch = (subpage: 'cyberphysical' | 'delivery') => {
+    setScienceSubpage(subpage);
+    if (subpage === 'cyberphysical') {
+      onNavigateSubpage?.('cyberphysical', activeSubtab || 'overview');
+    } else {
+      onNavigateSubpage?.('delivery');
+    }
+  };
+
+  const handleCopySubtabLink = (tab: CyberPhysicalSubTab) => {
+    const fullUrl = buildAbsoluteUrl({
+      screen: 'fuel',
+      subpage: 'cyberphysical',
+      subtab: tab,
+    });
+    navigator.clipboard.writeText(fullUrl).then(() => {
+      onShowToast?.(`Deep link copied: ${fullUrl}`);
+    });
+  };
 
   return (
     <div className="w-full bg-[#0e0e10] py-12 md:py-20 text-[#e5e1e4]">
@@ -22,9 +59,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
         <div className="mb-10 p-2 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             <button
-              onClick={() => {
-                setScienceSubpage('cyberphysical');
-              }}
+              onClick={() => handleSubpageSwitch('cyberphysical')}
               className={`p-4 rounded-xl text-left transition-all cursor-pointer border ${
                 scienceSubpage === 'cyberphysical'
                   ? 'bg-[#1c1b1d] border-[#ff5a1f] shadow-lg shadow-[#ff5a1f]/10'
@@ -48,9 +83,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
             </button>
 
             <button
-              onClick={() => {
-                setScienceSubpage('delivery');
-              }}
+              onClick={() => handleSubpageSwitch('delivery')}
               className={`p-4 rounded-xl text-left transition-all cursor-pointer border ${
                 scienceSubpage === 'delivery'
                   ? 'bg-[#1c1b1d] border-[#00f0ff] shadow-lg shadow-[#00f0ff]/10'
@@ -79,6 +112,9 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
           <CyberPhysicalScienceSubpage
             onOrderClick={onOrderClick}
             onSimulateSpray={onSimulateSpray}
+            activeSubTab={activeSubtab as CyberPhysicalSubTab}
+            onSubTabChange={(tab) => onNavigateSubpage?.('cyberphysical', tab)}
+            onCopyDeepLink={handleCopySubtabLink}
           />
         ) : (
           <div>

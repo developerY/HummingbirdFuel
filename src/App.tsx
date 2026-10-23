@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { ActiveScreen, CartItem, Product } from './types';
+import { useState, useEffect } from 'react';
+import { CartItem, Product } from './types';
 import { PRODUCTS } from './data/products';
+import { RouteState, parseRoute, updateHash } from './utils/router';
 import { Navbar } from './components/Navbar';
+import { Breadcrumbs } from './components/Breadcrumbs';
+import { CommandPalette } from './components/CommandPalette';
 import { Hero } from './components/Hero';
 import { MicrodoseCalculator } from './components/MicrodoseCalculator';
 import { CircadianProtocol } from './components/CircadianProtocol';
@@ -21,7 +24,7 @@ import { ContactScreen } from './components/ContactScreen';
 import { ProfileDrawer } from './components/ProfileDrawer';
 
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState<ActiveScreen>('home');
+  const [route, setRoute] = useState<RouteState>(() => parseRoute());
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       product: PRODUCTS[0], // Circadian Starter Kit initially in cart matching reference badge 2
@@ -38,6 +41,7 @@ export default function App() {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSprayDemoOpen, setIsSprayDemoOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -46,6 +50,43 @@ export default function App() {
     setTimeout(() => {
       setToastMessage((current) => (current === message ? null : current));
     }, 2800);
+  };
+
+  // Synchronize route with browser URL hash & history
+  useEffect(() => {
+    const handleHashChange = () => {
+      const parsed = parseRoute();
+      setRoute(parsed);
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleHashChange);
+
+    // Initial check on load
+    handleHashChange();
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handleHashChange);
+    };
+  }, []);
+
+  // Keyboard shortcut for Command Palette (⌘K / Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleNavigateRoute = (newRoute: RouteState) => {
+    setRoute(newRoute);
+    updateHash(newRoute);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddToCart = (product: Product, isSubscription: boolean = false, quantity: number = 1) => {
@@ -95,36 +136,41 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#131315] text-[#e5e1e4] flex flex-col font-['Manrope'] selection:bg-[#ff5a1f] selection:text-[#541400]">
-      {/* Sticky Glassmorphic Navbar */}
+      {/* Sticky Glassmorphic Navbar with Subpage Mega Menus & Command Palette */}
       <Navbar
-        activeScreen={activeScreen}
-        onNavigate={(screen) => setActiveScreen(screen)}
+        currentRoute={route}
+        onNavigateRoute={handleNavigateRoute}
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onShowToast={showToast}
+      />
+
+      {/* Subpage Breadcrumbs & Shareable Deep Link Bar */}
+      <Breadcrumbs
+        currentRoute={route}
+        onNavigate={handleNavigateRoute}
+        onShowToast={showToast}
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 pt-20">
-        {activeScreen === 'home' && (
+      <main className={`flex-1 ${route.screen === 'home' ? 'pt-20' : 'pt-0'}`}>
+        {route.screen === 'home' && (
           <>
             <Hero
               onOrderClick={() => {
-                const el = document.getElementById('store');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                else setActiveScreen('store');
+                handleNavigateRoute({ screen: 'store', subpage: 'all' });
               }}
               onExploreScienceClick={() => {
-                const el = document.getElementById('fuel-protocol');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                else setActiveScreen('fuel');
+                handleNavigateRoute({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' });
               }}
               onSimulateSpray={() => setIsSprayDemoOpen(true)}
             />
 
             <MicrodoseCalculator onSimulateSpray={() => setIsSprayDemoOpen(true)} />
 
-            <CircadianProtocol onLearnMore={() => setActiveScreen('fuel')} />
+            <CircadianProtocol onLearnMore={() => handleNavigateRoute({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })} />
 
             <DeliveryPhysics />
 
@@ -133,8 +179,7 @@ export default function App() {
               onAddToCart={(p) => handleAddToCart(p, false, 1)}
               onViewProduct={(p) => setSelectedProduct(p)}
               onNavigateToFullStore={() => {
-                setActiveScreen('store');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                handleNavigateRoute({ screen: 'store', subpage: 'all' });
               }}
             />
 
@@ -144,58 +189,64 @@ export default function App() {
 
             <FinalBanner
               onGetStarted={() => {
-                const el = document.getElementById('store');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                else setActiveScreen('store');
+                handleNavigateRoute({ screen: 'store', subpage: 'all' });
               }}
               onTalkToBiohacker={() => {
-                const el = document.getElementById('contact');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                else setActiveScreen('contact');
+                handleNavigateRoute({ screen: 'contact' });
               }}
             />
           </>
         )}
 
-        {activeScreen === 'fuel' && (
+        {route.screen === 'fuel' && (
           <>
             <ScienceScreen
               onOrderClick={() => {
-                setActiveScreen('store');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                handleNavigateRoute({ screen: 'store', subpage: 'all' });
               }}
               onSimulateSpray={() => setIsSprayDemoOpen(true)}
+              activeSubpage={route.subpage}
+              activeSubtab={route.subtab}
+              onNavigateSubpage={(subpage, subtab) => {
+                handleNavigateRoute({ screen: 'fuel', subpage, subtab });
+              }}
+              onShowToast={showToast}
             />
             <MicrodoseCalculator onSimulateSpray={() => setIsSprayDemoOpen(true)} />
             <CircadianProtocol onLearnMore={() => {}} />
             <DeliveryPhysics />
             <FinalBanner
-              onGetStarted={() => setActiveScreen('store')}
-              onTalkToBiohacker={() => setActiveScreen('contact')}
+              onGetStarted={() => handleNavigateRoute({ screen: 'store', subpage: 'all' })}
+              onTalkToBiohacker={() => handleNavigateRoute({ screen: 'contact' })}
             />
           </>
         )}
 
-        {activeScreen === 'store' && (
+        {route.screen === 'store' && (
           <>
             <StoreScreen
               products={PRODUCTS}
               onAddToCart={(p, isSub, qty) => handleAddToCart(p, isSub, qty || 1)}
               onViewProduct={(p) => setSelectedProduct(p)}
+              activeSubpage={route.subpage}
+              onNavigateSubpage={(subpage) => {
+                handleNavigateRoute({ screen: 'store', subpage });
+              }}
+              onShowToast={showToast}
             />
             <Testimonials />
             <FinalBanner
               onGetStarted={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              onTalkToBiohacker={() => setActiveScreen('contact')}
+              onTalkToBiohacker={() => handleNavigateRoute({ screen: 'contact' })}
             />
           </>
         )}
 
-        {activeScreen === 'contact' && (
+        {route.screen === 'contact' && (
           <>
             <ContactScreen />
             <FinalBanner
-              onGetStarted={() => setActiveScreen('store')}
+              onGetStarted={() => handleNavigateRoute({ screen: 'store', subpage: 'all' })}
               onTalkToBiohacker={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             />
           </>
@@ -205,11 +256,18 @@ export default function App() {
       {/* Global Footer */}
       <Footer
         onNavigate={(screen) => {
-          setActiveScreen(screen);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          handleNavigateRoute({ screen });
         }}
         onOpenPrivacy={() => showToast('Privacy Policy: All biological telemetry stored in strict zero-retention AES-256.')}
         onOpenTerms={() => showToast('Terms: Backed by 30-Day Full Efficacy Bio-Guarantee.')}
+      />
+
+      {/* Command Palette (⌘K) Spotlight Quick Navigator */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onSelectDestination={handleNavigateRoute}
+        onShowToast={showToast}
       />
 
       {/* Slide-over Cart Drawer */}
@@ -248,8 +306,7 @@ export default function App() {
         isOpen={isProfileOpen}
         onClose={() => setIsProfileOpen(false)}
         onNavigateToStore={() => {
-          setActiveScreen('store');
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          handleNavigateRoute({ screen: 'store', subpage: 'all' });
         }}
       />
 

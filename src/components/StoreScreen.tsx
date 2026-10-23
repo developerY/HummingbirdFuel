@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Product } from '../types';
 
 interface StoreScreenProps {
@@ -6,17 +6,36 @@ interface StoreScreenProps {
   onAddToCart: (product: Product, isSubscription: boolean, quantity?: number) => void;
   onViewProduct: (product: Product) => void;
   onOpenCoaModal?: (batchId: string) => void;
+  activeSubpage?: string;
+  onNavigateSubpage?: (subpage: string) => void;
+  onShowToast?: (message: string) => void;
 }
 
 export const StoreScreen: React.FC<StoreScreenProps> = ({
   products,
   onAddToCart,
   onViewProduct,
-  onOpenCoaModal
+  onOpenCoaModal,
+  activeSubpage,
+  onNavigateSubpage,
+  onShowToast
 }) => {
   // Navigation & Category Filters
   const [selectedFilter, setSelectedFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('featured');
+
+  useEffect(() => {
+    if (activeSubpage) {
+      if (activeSubpage === 'coa') {
+        const coaSection = document.getElementById('coa-section');
+        if (coaSection) {
+          coaSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        setSelectedFilter(activeSubpage);
+      }
+    }
+  }, [activeSubpage]);
 
   // Hero Mastery System Bundle state
   const [heroPlan, setHeroPlan] = useState<'sub' | 'once'>('sub');
@@ -908,7 +927,7 @@ export const StoreScreen: React.FC<StoreScreenProps> = ({
       </section>
 
       {/* SECTION 5: Transparent Formulation & Lab Certificate Telemetry */}
-      <section className="w-full max-w-[1280px] mx-auto px-5 md:px-12 py-10">
+      <section id="coa-section" className="w-full max-w-[1280px] mx-auto px-5 md:px-12 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
           {/* Lab Telemetry Data Card */}
           <div className="lg:col-span-7 flex flex-col gap-4">

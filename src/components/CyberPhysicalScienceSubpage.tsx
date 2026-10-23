@@ -1,17 +1,40 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+
+export type CyberPhysicalSubTab =
+  | 'overview'
+  | 'ingestion'
+  | 'algorithm'
+  | 'delivery'
+  | 'clinical'
+  | 'regulatory';
 
 interface CyberPhysicalScienceSubpageProps {
   onOrderClick?: () => void;
   onSimulateSpray?: () => void;
+  activeSubTab?: CyberPhysicalSubTab;
+  onSubTabChange?: (tab: CyberPhysicalSubTab) => void;
+  onCopyDeepLink?: (tab: CyberPhysicalSubTab) => void;
 }
 
 export const CyberPhysicalScienceSubpage: React.FC<CyberPhysicalScienceSubpageProps> = ({
   onOrderClick,
-  onSimulateSpray
+  onSimulateSpray,
+  activeSubTab: propSubTab,
+  onSubTabChange,
+  onCopyDeepLink,
 }) => {
-  const [activeSubTab, setActiveSubTab] = useState<
-    'overview' | 'ingestion' | 'algorithm' | 'delivery' | 'clinical' | 'regulatory'
-  >('overview');
+  const [activeSubTab, setActiveSubTab] = useState<CyberPhysicalSubTab>(propSubTab || 'overview');
+
+  useEffect(() => {
+    if (propSubTab && propSubTab !== activeSubTab) {
+      setActiveSubTab(propSubTab);
+    }
+  }, [propSubTab]);
+
+  const handleSelectTab = (tab: CyberPhysicalSubTab) => {
+    setActiveSubTab(tab);
+    onSubTabChange?.(tab);
+  };
 
   // Simulator State (Tab 3)
   const [simGenotype, setSimGenotype] = useState<'fast' | 'slow'>('fast');
@@ -176,27 +199,40 @@ export const CyberPhysicalScienceSubpage: React.FC<CyberPhysicalScienceSubpagePr
         </p>
 
         {/* Subpage Tabs Navigation */}
-        <div className="flex items-center gap-2 overflow-x-auto pt-6 border-t border-[#282a36]/60 mt-6 scrollbar-none">
-          {[
-            { id: 'overview', label: '📊 Overview & Reality Matrix' },
-            { id: 'ingestion', label: '📡 Sensors & OS Pipeline' },
-            { id: 'algorithm', label: '🧬 PK/PD & Alertness Simulator' },
-            { id: 'delivery', label: '💊 Spray Kinetics & Hardware' },
-            { id: 'clinical', label: '🩺 Clinical Verticals (ADHD/Cancer)' },
-            { id: 'regulatory', label: '🛡️ 2026 FDA Regulatory Engine' }
-          ].map((tab) => (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-6 border-t border-[#282a36]/60 mt-6">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
+            {[
+              { id: 'overview', label: '📊 Reality Matrix' },
+              { id: 'ingestion', label: '📡 Sensors & Pipeline' },
+              { id: 'algorithm', label: '🧬 Bateman PK/PD' },
+              { id: 'delivery', label: '💊 McCarthy Hardware' },
+              { id: 'clinical', label: '🩺 ADHD / Cancer' },
+              { id: 'regulatory', label: '🛡️ 2026 FDA Engine' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => handleSelectTab(tab.id as CyberPhysicalSubTab)}
+                className={`px-3.5 py-2 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
+                  activeSubTab === tab.id
+                    ? 'bg-[#ff5a1f] text-[#0e0e10] font-bold shadow-md'
+                    : 'bg-[#1c1b1d] text-[#8d90a5] hover:text-[#e5e1e4] hover:bg-[#201f21] border border-[#282a36]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {onCopyDeepLink && (
             <button
-              key={tab.id}
-              onClick={() => setActiveSubTab(tab.id as any)}
-              className={`px-4 py-2 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
-                activeSubTab === tab.id
-                  ? 'bg-[#ff5a1f] text-[#0e0e10] font-bold shadow-md'
-                  : 'bg-[#1c1b1d] text-[#8d90a5] hover:text-[#e5e1e4] hover:bg-[#201f21] border border-[#282a36]'
-              }`}
+              onClick={() => onCopyDeepLink(activeSubTab)}
+              title="Copy deep link URL directly to this specific clinical subtab"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1c1b1d] border border-[#ff5a1f]/30 hover:border-[#ff5a1f] text-[#ffb59e] hover:text-[#ff8a00] text-xs font-['JetBrains_Mono'] shrink-0 cursor-pointer transition-all self-end sm:self-auto"
             >
-              {tab.label}
+              <span className="material-symbols-outlined text-[15px]">link</span>
+              <span>Copy Section Link</span>
             </button>
-          ))}
+          )}
         </div>
       </div>
 
