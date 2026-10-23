@@ -1,0 +1,6 @@
+{
+  "name": "HUMMINGBIRD.FUEL - AI Microdose Energy Spray",
+  "description": "Artificial Intelligent Microdose Energy Spray — Energy All Day / Sleep All Night. High-performance biohacking, cognitive acceleration, and circadian rhythm optimization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

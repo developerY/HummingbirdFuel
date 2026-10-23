@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-headline: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-surface-container-lowest: #0e0e10;
+  --color-surface: #131315;
+  --color-surface-container-low: #1c1b1d;
+  --color-surface-container: #201f21;
+  --color-surface-container-high: #2a2a2c;
+  --color-surface-container-highest: #353437;
+  --color-slate-surface: #121318;
+  --color-slate-elevated: #1a1c24;
+  --color-slate-border: #282a36;
+
+  --color-primary: #ffb59e;
+  --color-primary-container: #ff5a1f;
+  --color-on-primary: #5e1700;
+  --color-on-primary-container: #541400;
+
+  --color-secondary: #ffb77f;
+  --color-secondary-container: #ff8a00;
+  --color-tertiary: #ffb95a;
+  --color-electric-cyan: #00f0ff;
+
+  --color-on-surface: #e5e1e4;
+  --color-on-surface-variant: #e4beb3;
+  --color-text-muted: #8d90a5;
+  --color-text-primary: #f8f9fa;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #131315;
+  color: #e5e1e4;
+  overflow-x: hidden;
+}
+
+/* Material symbol styling utility */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}

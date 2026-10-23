@@ -1,0 +1,217 @@
+---
+name: Obsidian Kinetic
+colors:
+  surface: '#131315'
+  surface-dim: '#131315'
+  surface-bright: '#39393b'
+  surface-container-lowest: '#0e0e10'
+  surface-container-low: '#1c1b1d'
+  surface-container: '#201f21'
+  surface-container-high: '#2a2a2c'
+  surface-container-highest: '#353437'
+  on-surface: '#e5e1e4'
+  on-surface-variant: '#e4beb3'
+  inverse-surface: '#e5e1e4'
+  inverse-on-surface: '#313032'
+  outline: '#ab897f'
+  outline-variant: '#5b4038'
+  surface-tint: '#ffb59e'
+  primary: '#ffb59e'
+  on-primary: '#5e1700'
+  primary-container: '#ff5a1f'
+  on-primary-container: '#541400'
+  inverse-primary: '#ae3200'
+  secondary: '#ffb77f'
+  on-secondary: '#4e2600'
+  secondary-container: '#ff8a00'
+  on-secondary-container: '#613100'
+  tertiary: '#ffb95a'
+  on-tertiary: '#462a00'
+  tertiary-container: '#c78417'
+  on-tertiary-container: '#3f2600'
+  error: '#ffb4ab'
+  on-error: '#690005'
+  error-container: '#93000a'
+  on-error-container: '#ffdad6'
+  primary-fixed: '#ffdbd0'
+  primary-fixed-dim: '#ffb59e'
+  on-primary-fixed: '#3a0b00'
+  on-primary-fixed-variant: '#852400'
+  secondary-fixed: '#ffdcc4'
+  secondary-fixed-dim: '#ffb77f'
+  on-secondary-fixed: '#2f1500'
+  on-secondary-fixed-variant: '#6f3900'
+  tertiary-fixed: '#ffddb6'
+  tertiary-fixed-dim: '#ffb95a'
+  on-tertiary-fixed: '#2a1800'
+  on-tertiary-fixed-variant: '#643f00'
+  background: '#131315'
+  on-background: '#e5e1e4'
+  surface-variant: '#353437'
+  slate-surface: '#121318'
+  slate-elevated: '#1a1c24'
+  slate-border: '#282a36'
+  ember-glow: '#ff6200'
+  gold-spectrum: '#e2b338'
+  electric-cyan: '#00f0ff'
+  text-primary: '#f8f9fa'
+  text-muted: '#8d90a5'
+typography:
+  display-xl:
+    fontFamily: Space Grotesk
+    fontSize: 56px
+    fontWeight: '700'
+    lineHeight: 64px
+    letterSpacing: -0.03em
+  display-xl-mobile:
+    fontFamily: Space Grotesk
+    fontSize: 38px
+    fontWeight: '700'
+    lineHeight: 46px
+    letterSpacing: -0.02em
+  headline-lg:
+    fontFamily: Space Grotesk
+    fontSize: 40px
+    fontWeight: '600'
+    lineHeight: 48px
+    letterSpacing: -0.02em
+  headline-lg-mobile:
+    fontFamily: Space Grotesk
+    fontSize: 28px
+    fontWeight: '600'
+    lineHeight: 36px
+    letterSpacing: -0.01em
+  headline-md:
+    fontFamily: Space Grotesk
+    fontSize: 28px
+    fontWeight: '600'
+    lineHeight: 36px
+    letterSpacing: -0.01em
+  headline-sm:
+    fontFamily: Space Grotesk
+    fontSize: 20px
+    fontWeight: '600'
+    lineHeight: 28px
+    letterSpacing: 0em
+  body-lg:
+    fontFamily: Manrope
+    fontSize: 18px
+    fontWeight: '400'
+    lineHeight: 28px
+    letterSpacing: -0.01em
+  body-md:
+    fontFamily: Manrope
+    fontSize: 15px
+    fontWeight: '400'
+    lineHeight: 24px
+    letterSpacing: 0em
+  body-sm:
+    fontFamily: Manrope
+    fontSize: 13px
+    fontWeight: '400'
+    lineHeight: 20px
+    letterSpacing: 0.01em
+  label-lg:
+    fontFamily: JetBrains Mono
+    fontSize: 14px
+    fontWeight: '500'
+    lineHeight: 20px
+    letterSpacing: 0.05em
+  label-md:
+    fontFamily: JetBrains Mono
+    fontSize: 12px
+    fontWeight: '500'
+    lineHeight: 16px
+    letterSpacing: 0.08em
+  label-sm:
+    fontFamily: JetBrains Mono
+    fontSize: 10px
+    fontWeight: '600'
+    lineHeight: 14px
+    letterSpacing: 0.12em
+rounded:
+  sm: 0.25rem
+  DEFAULT: 0.5rem
+  md: 0.75rem
+  lg: 1rem
+  xl: 1.5rem
+  full: 9999px
+spacing:
+  gutter: 1.5rem
+  gutter-mobile: 1rem
+  margin: 3rem
+  margin-mobile: 1.25rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2.5rem
+  space-2xl: 4rem
+  space-3xl: 6rem
+---
+
+## Brand & Style
+
+This design system embodies high-performance biohacking, cognitive acceleration, and circadian rhythm optimization. Rooted in the concept of precise neuro-metabolic energy delivery ("Artificial Intelligent Microdose Energy Spray — Energy All Day / Sleep All Night"), the interface evokes extreme focus, computational precision, and vital energy.
+
+The aesthetic fuses **Futuristic Dark Minimalist** architecture with **Glassmorphism** and controlled **Kinetic High-Contrast Accents**. The base environment is a deep, immersive obsidian void that eliminates visual fatigue and sets an elite stage. Surfaces utilize tinted slate glass layers with precise micro-borders. High-energy thermogenic amber and neon-flame gradients puncture the darkness, drawing sharp visual hierarchy toward metabolic metrics, microdose spray toggles, and conversion funnels. Technical monospace elements convey formulaic precision, scientific credibility, and computational micro-dosing dosage controls.
+
+## Colors
+
+The color structure is engineered around contrast and luminous hierarchy on deep canvases:
+
+- **Primary (`#ff5a1f`) & Secondary (`#ff8a00`)**: The core kinetic energy spectrum. Used for primary conversion triggers, active microdose states, flame gradient accents, and critical kinetic telemetry.
+- **Tertiary (`#ffb347`) & Gold Spectrum (`#e2b338`)**: Radiance markers, circadian daytime markers, premium edition indicators, and active flame highlights.
+- **Neutral Base (`#0a0a0c`)**: Absolute obsidian floor. Absorbs ambient light and grounds floating glass cards without harsh pure-black clip.
+- **Slate Surfaces (`#121318` & `#1a1c24`)**: Translucent surface containers with cool-slate undertones providing separation from the canvas.
+- **Electric Cyan (`#00f0ff`)**: Infrequently deployed auxiliary accent strictly for biological diagnostics, night/sleep circadian state shifts, and AI microdose calibration feedback.
+
+## Typography
+
+Typography delivers a precise balance of scientific authority and futuristic lifestyle energy:
+
+- **Headlines (Space Grotesk)**: Chosen for its razor-sharp geometric cuts, wide stance, and high-tech pedigree reminiscent of clean laboratory interfaces and aerospace engineering. Headline tracking is tightly pulled to create impactful display units.
+- **Body & Editorial (Manrope)**: Delivers exceptional legibility on dark glass surfaces. Its modern neo-grotesque proportions balance high x-height with gentle humanistic terminals, ensuring fatigue-free reading across dosage instructions and scientific breakdowns.
+- **Technical & Metric Accents (JetBrains Mono)**: Encodes AI microdose intervals, batch data, active ingredient ratios, and dosage counters with cold, unyielding mathematical certainty. Always applied to uppercase data tags and UI metrics.
+
+## Layout & Spacing
+
+The layout is built upon a responsive 12-column dynamic fluid grid on desktop (`1280px` max-width content container) collapsing to a 6-column grid on tablet (`768px`) and a 4-column system on mobile devices (`375px+`).
+
+- **Grid Alignment**: Sections maintain breathable rhythm with vertical section spacing scaling from `space-2xl` on mobile devices to `space-3xl` on desktop views.
+- **Component Padding**: Interactive cards and control panels leverage a consistent `space-lg` inner breathing area, keeping critical information anchored safely away from illuminated borders.
+- **Rhythm & Proximity**: Dense metric readouts (e.g., microdose sprays remaining, bioavailability absorption curves) utilize tight `space-xs` and `space-sm` gaps, while primary thematic sections maintain spacious cinematic distance.
+
+## Elevation & Depth
+
+Depth in this design system is achieved through light emission, translucent layering, and chromatic edge highlights rather than traditional drop shadows:
+
+1. **Surface 0 (Canvas Void)**: `#0a0a0c` solid foundation. Ambient background elements may feature faint radial glows (`rgba(255, 90, 31, 0.04)`) with 120px blur radii to indicate energy nodes.
+2. **Surface 1 (Base Glass Deck)**: `#121318` rendered at 80% opacity with `16px` backdrop-filter blur. Outlined by a crisp 1px ghost border `rgba(255, 255, 255, 0.08)`.
+3. **Surface 2 (Elevated Kinetic Modules)**: `#1a1c24` at 85% opacity with `24px` backdrop-filter blur. Uses directional linear gradient borders that transition from `rgba(255, 90, 31, 0.4)` at the top edge to `rgba(255, 255, 255, 0.05)` at the bottom edge.
+4. **Ember Glow Elevation**: High-focus active states (hovered cards, primary purchase pods) project an external ambient luminescence: `0 0 32px rgba(255, 90, 31, 0.25), 0 0 1px rgba(255, 138, 0, 0.6)`.
+
+## Shapes
+
+The shape architecture relies on controlled rounded geometry (`roundedness: 2`, `8px` baseline). This choice prevents the clinical austerity of sharp corners while preserving high-tech precision.
+
+- **Primary Interactive Elements**: Buttons, dosage toggles, and input fields use `rounded` (0.5rem / 8px) or complete `pill` styling (for micro-tags, dynamic spray triggers, and status capsules).
+- **Glassmorphic Feature Panels**: Utilize `rounded-xl` (1.5rem / 24px) to create sleek handheld hardware-like frames.
+- **Inner Data Cells**: Use `rounded-sm` (0.25rem / 4px) to preserve internal structural density within parent cards.
+
+## Components
+
+### Buttons
+- **Primary Kinetic Button**: High-gradient fill (`linear-gradient(135deg, #ff5a1f 0%, #ff8a00 100%)`), uppercase Space Grotesk medium font, `label-lg` tracking, pure dark `#0a0a0c` text for extreme contrast. Hover triggers a radiant energy halo (`box-shadow: 0 0 24px rgba(255, 90, 31, 0.5)`).
+- **Secondary Ghost Glass Button**: Translucent slate background (`rgba(255, 255, 255, 0.04)`), crisp 1px border (`rgba(255, 255, 255, 0.15)`), white text. On hover, the border shifts to `#ff8a00` with an amber text reflection.
+- **Telemetry Micro-Trigger**: Pill-shaped button housing microdose spray counter buttons with embedded mono labels.
+
+### Chips & Micro-Badges
+- Monospace metadata indicators (`label-sm`) with dark slate backgrounds, 1px translucent borders, and a pulsing ember dot (`#ff5a1f`) representing active bio-availability modes. Day formulas utilize amber badges; nocturnal recovery states adopt soft cyan or deep gold tokens.
+
+### Product Showcase Cards
+- Obsidian glass container featuring high-contrast rim lighting. Includes high-resolution bottle rendering with an offset ambient radial glow matching the bottle's formula flame. Integrated dosage calculator and live delivery state chips line the bottom margin.
+
+### Input Fields & Controls
+- **Text Inputs**: `#121318` background with an inset ghost border (`rgba(255, 255, 255, 0.08)`). Focused state illuminates the perimeter with a 1px `#ff5a1f` stroke and subtle `0 0 12px rgba(255, 90, 31, 0.2)` inner glow. Typography set in JetBrains Mono for exact numerical or code entry.
+- **Bio-Sliders & Steppers**: Custom energy dial/slider components filled with kinetic flame gradient tracks, displaying real-time microdose spray volume and estimated kinetic hours remaining.

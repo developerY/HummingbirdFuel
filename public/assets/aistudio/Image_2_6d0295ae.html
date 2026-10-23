@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Manrope:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-lowest": "#0e0e10", "surface": "#131315", "on-error-container": "#ffdad6", "on-secondary-fixed": "#2f1500", "slate-elevated": "#1a1c24", "primary-fixed": "#ffdbd0", "surface-container-high": "#2a2a2c", "tertiary-fixed-dim": "#ffb95a", "slate-border": "#282a36", "on-surface": "#e5e1e4", "surface-container": "#201f21", "on-tertiary-container": "#3f2600", "tertiary": "#ffb95a", "surface-container-low": "#1c1b1d", "outline-variant": "#5b4038", "error": "#ffb4ab", "outline": "#ab897f", "error-container": "#93000a", "text-muted": "#8d90a5", "on-tertiary-fixed": "#2a1800", "secondary-fixed": "#ffdcc4", "inverse-surface": "#e5e1e4", "on-error": "#690005", "inverse-primary": "#ae3200", "secondary": "#ffb77f", "secondary-container": "#ff8a00", "primary-fixed-dim": "#ffb59e", "gold-spectrum": "#e2b338", "ember-glow": "#ff6200", "on-background": "#e5e1e4", "on-surface-variant": "#e4beb3", "on-primary-container": "#541400", "on-primary-fixed": "#3a0b00", "on-secondary": "#4e2600", "slate-surface": "#121318", "tertiary-container": "#c78417", "on-primary-fixed-variant": "#852400", "surface-variant": "#353437", "on-tertiary-fixed-variant": "#643f00", "electric-cyan": "#00f0ff", "inverse-on-surface": "#313032", "surface-container-highest": "#353437", "tertiary-fixed": "#ffddb6", "primary-container": "#ff5a1f", "on-secondary-fixed-variant": "#6f3900", "on-primary": "#5e1700", "on-secondary-container": "#613100", "text-primary": "#f8f9fa", "surface-tint": "#ffb59e", "secondary-fixed-dim": "#ffb77f", "surface-dim": "#131315", "primary": "#ffb59e", "surface-bright": "#39393b", "on-tertiary": "#462a00", "background": "#131315" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-sm": "0.5rem", "space-xs": "0.25rem", "space-2xl": "4rem", "margin-mobile": "1.25rem", "space-lg": "1.5rem", "margin": "3rem", "gutter": "1.5rem", "space-xl": "2.5rem", "space-md": "1rem", "gutter-mobile": "1rem", "space-3xl": "6rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "headline-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "body-lg": [ "Manrope" ], "display-xl-mobile": [ "Space Grotesk" ], "body-sm": [ "Manrope" ], "body-md": [ "Manrope" ], "label-md": [ "JetBrains Mono" ], "headline-lg-mobile": [ "Space Grotesk" ], "label-sm": [ "JetBrains Mono" ], "label-lg": [ "JetBrains Mono" ], "display-xl": [ "Space Grotesk" ] }, "fontSize": { "headline-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" } ], "body-lg": [ "18px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "display-xl-mobile": [ "38px", { "lineHeight": "46px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-sm": [ "13px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "400" } ], "body-md": [ "15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-md": [ "12px", { "lineHeight": "16px", "letterSpacing": "0.08em", "fontWeight": "500" } ], "headline-lg-mobile": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-sm": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.12em", "fontWeight": "600" } ], "label-lg": [ "14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "500" } ], "display-xl": [ "56px", { "lineHeight": "64px", "letterSpacing": "-0.03em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-slate-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-20 w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm" data-path="home" href="#"><img alt="Hummingbird Fuel Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XLi-jZTCiky9IhQb5zJtiwBMYASXOAJz0tXIAmozXDKLUJR9cLuI8CkR9v8CmnnDSOL5OmSZBLwDpNBGBn_iYOzf24lBrOSrlImaJPdYgqQAw_CcUI92BTyL9nSgtF8Mx9Z-DyaAbWa4fQcSweeu-ngQpmAzUWVSwvatt8n4EKrLSGrb0SrvuBEiWR3sPY9gcv7YWSp7A_4gbLn0qemdhqZBrresFpKgqJd-hL6NCPM5DaHCMAU-z0gQ"/><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface hidden sm:inline-block">HUMMINGBIRD<span class="text-primary-container">.FUEL</span></span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low"><span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">AI Microdose Spray</span></div></div><nav class="hidden md:flex items-center gap-space-xl" data-active-classes="text-primary-container font-headline-sm"><a aria-current="page" class="transition-colors text-primary-container font-headline-sm" data-path="home" href="#">Home</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="fuel" href="#">Fuel</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="store" href="#">Store</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="contact" href="#">Contact</a></nav><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center justify-center px-space-lg py-space-sm rounded-lg bg-surface-container-high text-on-surface hover:bg-surface-bright hover:text-on-surface font-label-lg text-label-lg uppercase tracking-wider transition-all" data-path="store" href="#">Shop Now</a><button aria-label="View Cart" class="relative p-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high hover:text-on-surface text-on-surface-variant transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary-container text-on-primary-container font-label-sm text-[10px] flex items-center justify-center font-bold">2</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-background min-h-screen"><div class="flex flex-col w-full text-on-surface">
+<!-- HERO SECTION -->
+<section class="relative w-full overflow-hidden bg-surface-container-lowest -mt-20 pt-28 pb-space-3xl">
+<!-- Ambient Energy Core Radial Glow -->
+<div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[900px] h-[500px] rounded-full bg-gradient-to-tr from-primary-container/20 via-secondary-container/15 to-transparent blur-[140px] pointer-events-none"></div>
+<div class="absolute -top-32 right-10 w-96 h-96 rounded-full bg-electric-cyan/5 blur-[120px] pointer-events-none"></div>
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin relative z-10">
+<!-- Top Telemetry Micro-Badge -->
+<div class="flex flex-wrap items-center gap-space-sm mb-space-lg">
+<div class="inline-flex items-center gap-space-xs px-space-md py-1 rounded-full bg-slate-surface shadow-sm">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Next-Gen Bio-Enhancement</span>
+</div>
+<div class="hidden sm:inline-flex items-center gap-1 font-label-sm text-label-sm text-text-muted px-space-sm py-1 rounded bg-surface-container-low">
+<span class="material-symbols-outlined text-[14px] text-tertiary">bolt</span>
+          PATENTED SUBLINGUAL DELIVERY
+        </div>
+</div>
+<!-- Main Hero Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
+<!-- Left: High Impact Copy & Conversion Engine -->
+<div class="lg:col-span-7 flex flex-col items-start">
+<div class="mb-space-xs">
+<span class="font-label-lg text-label-lg tracking-[0.2em] text-secondary uppercase block">
+              Bio-Engineered For Humans
+            </span>
+</div>
+<h1 class="font-headline-lg md:font-display-xl text-headline-lg md:text-display-xl uppercase tracking-tighter text-on-surface mb-space-md leading-[1.05]">
+            Hummingbird Fuel <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container via-secondary to-tertiary">
+              For Humans.
+            </span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mb-space-xl leading-relaxed">
+            Artificial Intelligent Microdose Energy Spray. Master your metabolic trajectory: Clean, crash-free cognitive fuel all day, and rapid sublingual neuro-reset for deep regenerative sleep at night.
+          </p>
+<!-- CTA Pod -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-md w-full sm:w-auto mb-space-2xl">
+<a class="inline-flex items-center justify-center gap-space-sm px-space-xl py-space-md rounded-lg bg-gradient-to-r from-primary-container to-secondary-container text-surface-container-lowest font-headline-sm text-headline-sm hover:brightness-110 shadow-xl transition-all group" href="#store">
+<span>Order Microdose Spray</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+<a class="inline-flex items-center justify-center gap-space-xs px-space-xl py-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-bright font-label-lg text-label-lg uppercase tracking-wider transition-all" href="#fuel-protocol">
+<span class="material-symbols-outlined text-[20px] text-primary">biotech</span>
+              Explore The Science
+            </a>
+</div>
+<!-- Micro Dose Telemetry Strip -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm w-full pt-space-md">
+<div class="p-space-sm rounded-lg bg-slate-surface">
+<div class="font-label-sm text-label-sm text-text-muted uppercase">Sugar Content</div>
+<div class="font-headline-sm text-headline-sm text-primary">0.0<span class="font-label-sm text-label-sm">g</span></div>
+</div>
+<div class="p-space-sm rounded-lg bg-slate-surface">
+<div class="font-label-sm text-label-sm text-text-muted uppercase">Absorption</div>
+<div class="font-headline-sm text-headline-sm text-secondary">&lt;90<span class="font-label-sm text-label-sm">sec</span></div>
+</div>
+<div class="p-space-sm rounded-lg bg-slate-surface">
+<div class="font-label-sm text-label-sm text-text-muted uppercase">Crash Index</div>
+<div class="font-headline-sm text-headline-sm text-on-surface">ZERO</div>
+</div>
+<div class="p-space-sm rounded-lg bg-slate-surface">
+<div class="font-label-sm text-label-sm text-text-muted uppercase">Circadian Sync</div>
+<div class="font-headline-sm text-headline-sm text-electric-cyan">100%</div>
+</div>
+</div>
+</div>
+<!-- Right: Kinetic Visual Pod (Hummingbird Emblem & Spray Rendering) -->
+<div class="lg:col-span-5 relative flex items-center justify-center">
+<div class="relative w-full aspect-square max-w-[480px] flex items-center justify-center">
+<!-- Radiating Energy Rings -->
+<div class="absolute inset-0 rounded-full bg-surface-container-high/40 animate-pulse pointer-events-none"></div>
+<div class="absolute inset-8 rounded-full bg-slate-surface/80 shadow-2xl flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700" data-alt="Futuristic cybernetic black hummingbird with incandescent flame-engulfed wings taking flight, glowing molten amber, neon orange embers, and sleek dark obsidian reflective backdrop in high biohacking luxury render aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDIJQNh82OA3ohsVHpZtEv9VJgZp4uDeWTZSok7aMSITGyFg96NtHm0z2wRGxWIMsIwPxtSL7OgDXVGFlDqC4ZbbrUic0fo72a7jkreYQkdQKWIQ7pThBwMFWNxPvjX1nlCeOfC8_EQLWExQyqMhH84SOMOnnbco7AWbnmEdmuLAlddEJxleaZq36D_FXuSao0JGeVR_GKB3-hUogtkM9X_swGaeQrntrgVn6tbYYiINgGqa7MS3w"/>
+</div>
+<!-- Overlapping Floating Nano-Mist HUD Tag -->
+<div class="absolute -bottom-4 -left-4 p-space-md rounded-xl bg-slate-surface/90 backdrop-blur-xl shadow-xl flex items-center gap-space-md max-w-xs">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[24px]">air</span>
+</div>
+<div class="min-w-0">
+<div class="font-label-sm text-label-sm text-primary uppercase">Sublingual Micro-Mist</div>
+<div class="font-body-sm text-body-sm text-on-surface truncate">99.8% Mucosal Bio-Uptake</div>
+</div>
+</div>
+<!-- Overlapping Floating Circadian Dial Tag -->
+<div class="absolute -top-4 -right-4 p-space-md rounded-xl bg-slate-surface/90 backdrop-blur-xl shadow-xl flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]">schedule</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider">Day / Night Sync</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- LIVE BIO-METRIC DIAL / INTERACTIVE SPRAY SIMULATOR -->
+<section class="w-full bg-surface py-space-2xl">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin">
+<div class="p-space-xl rounded-xl bg-slate-surface shadow-xl">
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg mb-space-lg">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Precision Dosimeter</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Interactive Microdose Calculator</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Calibrate your daily sublingual sprays for targeted sustained adenosine clearance.</p>
+</div>
+<div class="flex items-center gap-space-md bg-surface-container px-space-md py-space-sm rounded-lg">
+<span class="font-label-md text-label-md text-text-muted">STATUS:</span>
+<span class="font-label-md text-label-md text-secondary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+              ACTIVE DISPENSE
+            </span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg items-center">
+<!-- Slider Control -->
+<div class="md:col-span-8 flex flex-col gap-space-md">
+<div class="flex justify-between items-center font-label-md text-label-md">
+<span class="text-on-surface-variant">SELECT SPRAYS (AM / PM):</span>
+<span class="text-primary font-headline-sm text-headline-sm" id="spray-count-label">2 Sprays (Microdose)</span>
+</div>
+<input class="w-full h-2 bg-surface-container rounded-lg appearance-none cursor-pointer accent-primary-container" id="spray-slider" max="4" min="1" step="1" type="range" value="2"/>
+<div class="flex justify-between font-label-sm text-label-sm text-text-muted">
+<span>1 Spray (Light Focus)</span>
+<span>2 Sprays (Peak Flow)</span>
+<span>3 Sprays (Deep Drive)</span>
+<span>4 Sprays (Hyper Metabolic)</span>
+</div>
+</div>
+<!-- Real-Time Metrics Output -->
+<div class="md:col-span-4 p-space-md rounded-lg bg-surface-container-high flex flex-col gap-space-sm">
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Sustained Cognitive Window:</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold" id="metric-window">4.5 Hours</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Adenosine Resistance:</span>
+<span class="font-label-md text-label-md text-primary font-semibold" id="metric-resistance">92% Precision</span>
+</div>
+<div class="flex justify-between items-center text-body-sm">
+<span class="text-on-surface-variant">Night Melatonin Onset:</span>
+<span class="font-label-md text-label-md text-tertiary font-semibold" id="metric-sleep">Unaltered (Natural)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CIRCADIAN RHYTHM PROTOCOL (ENERGY ALL DAY / SLEEP ALL NIGHT) -->
+<section class="w-full bg-surface-container-lowest py-space-3xl relative" id="fuel-protocol">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin">
+<div class="flex flex-col items-center text-center max-w-2xl mx-auto mb-space-3xl">
+<span class="font-label-md text-label-md text-primary uppercase tracking-widest mb-space-xs">Circadian Resonance</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-sm">
+          Energy All Day. Sleep All Night.
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Conventional stimulants flood your system with synthetic caffeine and crash your adrenals. Hummingbird Fuel uses dual-polarity sublingual nano-mists to sync flawlessly with your biological clock.
+        </p>
+</div>
+<!-- Dual Protocol Cards (AM / PM Split) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-xl">
+<!-- AM PROTOCOL: DAY FUEL -->
+<div class="relative rounded-2xl bg-slate-surface p-space-xl flex flex-col justify-between overflow-hidden group hover:bg-slate-elevated transition-colors shadow-lg">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between mb-space-lg">
+<span class="px-space-sm py-1 rounded bg-primary-container/20 text-primary-fixed-dim font-label-sm text-label-sm uppercase tracking-wider">
+                Phase 01 // AM Protocol
+              </span>
+<span class="material-symbols-outlined text-primary-container text-[28px]">light_mode</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-space-sm">
+              Day Fuel: Cognitive Ignite
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Delivers micro-dosed methylated B-complex, natural caffeine alkaloid micro-droplets, and Lion’s Mane nano-compounds directly via oral mucosa for immediate cellular ATP creation.
+            </p>
+<!-- Metric list -->
+<ul class="flex flex-col gap-space-sm mb-space-xl">
+<li class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Immediate 90-second mental clarity without jitters</span>
+</li>
+<li class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Sublingual bypass prevents stomach acidity and bloating</span>
+</li>
+<li class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span>
+<span>Zero afternoon slump; smoothly metabolized before dusk</span>
+</li>
+</ul>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-text-muted">DOSAGE:</span>
+<span class="font-label-md text-label-md text-on-surface font-mono">1-2 Sprays Under Tongue</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary uppercase">PEAK: 10:00 AM</span>
+</div>
+</div>
+<!-- PM PROTOCOL: NIGHT RESET -->
+<div class="relative rounded-2xl bg-slate-surface p-space-xl flex flex-col justify-between overflow-hidden group hover:bg-slate-elevated transition-colors shadow-lg">
+<div class="absolute top-0 right-0 w-64 h-64 bg-electric-cyan/10 rounded-full blur-3xl pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between mb-space-lg">
+<span class="px-space-sm py-1 rounded bg-electric-cyan/15 text-electric-cyan font-label-sm text-label-sm uppercase tracking-wider">
+                Phase 02 // PM Protocol
+              </span>
+<span class="material-symbols-outlined text-electric-cyan text-[28px]">bedtime</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-space-sm">
+              Night Reset: Delta Recovery
+            </h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              A gentle neuro-chemical descent. AI-quantified L-Theanine, Magnesium Bisglycinate micro-droplets, and botanical calmants signal the vagus nerve to induce rapid Delta-wave and REM rejuvenation.
+            </p>
+<!-- Metric list -->
+<ul class="flex flex-col gap-space-sm mb-space-xl">
+<li class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-electric-cyan text-[18px]">check_circle</span>
+<span>Reduces sleep latency to under 12 minutes</span>
+</li>
+<li class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-electric-cyan text-[18px]">check_circle</span>
+<span>Enhances nocturnal cellular mitochondrial repair</span>
+</li>
+<li class="flex items-center gap-space-sm font-body-sm text-body-sm text-on-surface">
+<span class="material-symbols-outlined text-electric-cyan text-[18px]">check_circle</span>
+<span>Zero morning grogginess or synthetic hormone dependency</span>
+</li>
+</ul>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-sm text-label-sm text-text-muted">DOSAGE:</span>
+<span class="font-label-md text-label-md text-on-surface font-mono">2 Sprays 30m Pre-Sleep</span>
+</div>
+<span class="font-label-sm text-label-sm text-electric-cyan uppercase">RECOVERY: 10:30 PM</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BIO-DELIVERY ARCHITECTURE (WHY MICRODOSE SPRAY?) -->
+<section class="w-full bg-surface py-space-3xl">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start mb-space-2xl">
+<div class="lg:col-span-6">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Nano-Delivery Physics</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-space-xs">
+            Why Microdose Spray Outperforms Pills &amp; High-Sugar Energy Drinks
+          </h2>
+</div>
+<div class="lg:col-span-6">
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+            Pills lose up to 80% of active nootropics through first-pass liver degradation. Hummingbird Fuel's micronized aerosol directly hits the sublingual capillaries for clean instantaneous neurotransmitter transmission.
+          </p>
+</div>
+</div>
+<!-- Feature Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="p-space-lg rounded-xl bg-slate-surface flex flex-col justify-between shadow-sm hover:translate-y-[-4px] transition-transform">
+<div>
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary mb-space-md">
+<span class="material-symbols-outlined text-[26px]">network_intelligence</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">AI Micro-Calibration</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Every pump dispenses an identical 0.12ml calibrated dosage, eliminating overstimulation and jitters.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-sm font-label-sm text-label-sm text-secondary">METRIC: ±0.002 ML ACCURACY</div>
+</div>
+<!-- Card 2 -->
+<div class="p-space-lg rounded-xl bg-slate-surface flex flex-col justify-between shadow-sm hover:translate-y-[-4px] transition-transform">
+<div>
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-secondary mb-space-md">
+<span class="material-symbols-outlined text-[26px]">speed</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">90-Second Bio-Uptake</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Absorbs through sublingual mucosa directly into the bloodstream without digestive delay.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-sm font-label-sm text-label-sm text-secondary">RATE: 4.8X FASTER THAN CAPSULES</div>
+</div>
+<!-- Card 3 -->
+<div class="p-space-lg rounded-xl bg-slate-surface flex flex-col justify-between shadow-sm hover:translate-y-[-4px] transition-transform">
+<div>
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-tertiary mb-space-md">
+<span class="material-symbols-outlined text-[26px]">battery_charging_full</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Clean Zero-Crash Curve</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              No sugar spikes, no artificial fillers, and no adrenal exhaustion. Just pure, constant cognitive drive.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-sm font-label-sm text-label-sm text-tertiary">GLYCEMIC INDEX: 0.0</div>
+</div>
+<!-- Card 4 -->
+<div class="p-space-lg rounded-xl bg-slate-surface flex flex-col justify-between shadow-sm hover:translate-y-[-4px] transition-transform">
+<div>
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-electric-cyan mb-space-md">
+<span class="material-symbols-outlined text-[26px]">sanitizer</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Pocket Form Factor</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              High-tensile aluminum casing holds 90 sprays in a discreet, aviation-grade pocket flask.
+            </p>
+</div>
+<div class="mt-space-lg pt-space-sm font-label-sm text-label-sm text-electric-cyan">CAPACITY: 45-DAY SUPPLY</div>
+</div>
+</div>
+</div>
+</section>
+<!-- STORE & PRODUCT SHOWCASE -->
+<section class="w-full bg-surface-container-lowest py-space-3xl" id="store">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-2xl">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Direct-To-Consumer Inventory</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-space-xs">
+            Precision Biohacking Dispenser Formats
+          </h2>
+</div>
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-text-muted">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+          BATCH #HF-2025-04 LIVE IN STOCK
+        </div>
+</div>
+<!-- Products Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-xl">
+<!-- PRODUCT 1: The Complete Circadian Starter Kit (Flagship) -->
+<div class="rounded-2xl bg-slate-surface p-space-lg flex flex-col justify-between shadow-xl relative group">
+<div class="absolute -top-3 left-6 px-space-md py-0.5 rounded-full bg-gradient-to-r from-primary-container to-secondary-container text-surface-container-lowest font-label-sm text-label-sm font-bold uppercase tracking-widest">
+            Best Value • Complete 24H Kit
+          </div>
+<div>
+<div class="w-full h-64 rounded-xl overflow-hidden bg-surface-container-high mb-space-md relative flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Two sleek minimalist matte-black microdose spray bottles labeled AM and PM sitting on a dark volcanic stone pedestal with subtle warm amber underglow and cold cyan backlighting luxury packaging product shot." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiX3OYIqrdAAnCP0P0hW3Qf0-E2qi2AH9OB-dOEi_FyihjSnbTY6I-LDpyNz9XnGcS1jnY2pWUobMk1POLYdOX1_zv3FeAjhQ2rAjpO4v3gxMp_bLZw1LzS74XTzsu94g_0wsohVRvnI8P3JX-FopLOdGjWiaDN4aJHrGtPW7QCpPmiXYyYbLPOA1zXvFUft38iXEjKILP1efqVFD0tRJQQtC6Vr34dnEJeQTp6Sec54cs5eXmtPQ"/>
+<span class="absolute top-3 right-3 px-space-sm py-1 rounded bg-surface-container-lowest/80 backdrop-blur-md text-on-surface font-label-sm text-label-sm">
+                4.9 ★ (1,240 Reviews)
+              </span>
+</div>
+<div class="flex justify-between items-baseline mb-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">The 24H Circadian Starter Kit</h3>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-primary">$68</span>
+<span class="text-text-muted font-body-sm text-body-sm line-through ml-1">$84</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Includes 1x Day Fuel (Energy Mist) + 1x Night Reset (Sleep Spray). 180 total microdoses for complete circadian synchronization.
+            </p>
+<div class="flex flex-wrap gap-1 mb-space-lg">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-text-muted">90 Day Sprays</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-text-muted">90 Night Sprays</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-secondary">Save 20%</span>
+</div>
+</div>
+<button class="w-full py-space-md rounded-lg bg-gradient-to-r from-primary-container to-secondary-container text-surface-container-lowest font-headline-sm text-headline-sm uppercase tracking-wide hover:brightness-110 shadow-lg transition-all flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+            Add Kit to Cart
+          </button>
+</div>
+<!-- PRODUCT 2: AM Day Fuel Solo Bottle -->
+<div class="rounded-2xl bg-slate-surface p-space-lg flex flex-col justify-between shadow-xl group">
+<div>
+<div class="w-full h-64 rounded-xl overflow-hidden bg-surface-container-high mb-space-md relative flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Single high tech pocket spray bottle in sleek obsidian matte finish with neon orange typography and an illuminated flame nozzle on dark glass studio background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBed-XnVjVm-Wx-ihO0ulhqG_CesArj0WxpN6Dh_cVPCpgqZxVdFhIBx1HJ5Y2O4Dl01v45PZx7EiePyotEvM9aHX0kgC-OLC5boRl4VFZm53AhqGbkOgFUhH7wrk5pleAtrH7y7oL4Fh9VWOalb0v4jRZoPVKECPsY7j0krKFaKJ_onmI5Aq37qHmBWVNDp3oQJv_CRfHXi9SGsAz7kVOP-Xn4bwYyLMv8wdZf3jCA86WJ8lECFbI"/>
+<span class="absolute top-3 right-3 px-space-sm py-1 rounded bg-surface-container-lowest/80 backdrop-blur-md text-on-surface font-label-sm text-label-sm">
+                4.8 ★ (890 Reviews)
+              </span>
+</div>
+<div class="flex justify-between items-baseline mb-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">AM Day Fuel Mist</h3>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-on-surface">$38</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Standalone day formula. Instant mitochondrial ATP enhancement, nootropic focus, and clear mental bandwidth for deep work.
+            </p>
+<div class="flex flex-wrap gap-1 mb-space-lg">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-text-muted">90 Sprays (45 Days)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-primary">Citrus Zest</span>
+</div>
+</div>
+<button class="w-full py-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-bright font-headline-sm text-headline-sm uppercase tracking-wide transition-all flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+            Add AM Spray ($38)
+          </button>
+</div>
+<!-- PRODUCT 3: PM Night Reset Solo Bottle -->
+<div class="rounded-2xl bg-slate-surface p-space-lg flex flex-col justify-between shadow-xl group">
+<div>
+<div class="w-full h-64 rounded-xl overflow-hidden bg-surface-container-high mb-space-md relative flex items-center justify-center">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Matte dark blue-violet biohacking microdose spray bottle with glowing cyan laser-etched font Hummingbird Fuel Night on a reflective dark slate surface with soft evening ambient lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoOG5iTr34l8jZT08kDjkh1y2fHG1otwolMjEMhWxgGZ8AlOxVEzoeni9HjiPD6BEIu-0jw2pzBaF8ZSch3qeYV0W0DiZTmOSucmzoBeRVOG1_cj7xi7li9a5ibkMhXUGNkiIKBwPKSj39wBtN6spXoxBz_jDDCBf8qsswwkUgm9-D1yxA7rXgtVUqXKu-togizFvKNCYKDti12fS7HLrKbHSTZxkMYjT3t0kiXzSdp0QsUET_Gxk"/>
+<span class="absolute top-3 right-3 px-space-sm py-1 rounded bg-surface-container-lowest/80 backdrop-blur-md text-on-surface font-label-sm text-label-sm">
+                4.9 ★ (640 Reviews)
+              </span>
+</div>
+<div class="flex justify-between items-baseline mb-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">PM Night Reset Spray</h3>
+<div class="text-right">
+<span class="font-headline-sm text-headline-sm text-on-surface">$38</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+              Standalone sleep protocol. Accelerates sleep onset, activates parasympathetic calm, and supports uninterrupted deep sleep cycles.
+            </p>
+<div class="flex flex-wrap gap-1 mb-space-lg">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-text-muted">90 Sprays (45 Days)</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-electric-cyan">Alpine Mint</span>
+</div>
+</div>
+<button class="w-full py-space-md rounded-lg bg-surface-container text-on-surface hover:bg-surface-bright font-headline-sm text-headline-sm uppercase tracking-wide transition-all flex items-center justify-center gap-space-xs" type="button">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+            Add PM Spray ($38)
+          </button>
+</div>
+</div>
+</div>
+</section>
+<!-- SOCIAL PROOF & CLINICAL TESTIMONIALS -->
+<section class="w-full bg-surface py-space-3xl">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin">
+<div class="flex flex-col items-center text-center max-w-2xl mx-auto mb-space-3xl">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Validated Telemetry</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-space-xs">
+          Endorsed by Neuro-Athletes &amp; Biohackers
+        </h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Review 1 -->
+<div class="p-space-xl rounded-2xl bg-slate-surface flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center gap-1 text-tertiary mb-space-md">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic mb-space-lg">
+              "I replaced my four daily espresso shots with two sprays of AM Fuel. Zero heart palpitations, no sour stomach, and my Oura ring deep sleep increased by 38 minutes within the first week."
+            </p>
+</div>
+<div class="flex items-center gap-space-md pt-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-primary">
+              DR
+            </div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Dr. Kieran Vance</div>
+<div class="font-label-sm text-label-sm text-text-muted">Longevity Researcher &amp; Triathlete</div>
+</div>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="p-space-xl rounded-2xl bg-slate-surface flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center gap-1 text-tertiary mb-space-md">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic mb-space-lg">
+              "The sublingual delivery is unbelievable. You feel your cognitive horizon sharpen within 90 seconds. And the PM formula shuts down racing thoughts right before bed."
+            </p>
+</div>
+<div class="flex items-center gap-space-md pt-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-secondary">
+              EL
+            </div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Elena Rostova</div>
+<div class="font-label-sm text-label-sm text-text-muted">Tech Founder &amp; High-Output Executive</div>
+</div>
+</div>
+</div>
+<!-- Review 3 -->
+<div class="p-space-xl rounded-2xl bg-slate-surface flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center gap-1 text-tertiary mb-space-md">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant italic mb-space-lg">
+              "As a flight engineer working across multiple time zones, my circadian rhythm was wrecked. Hummingbird Fuel gave me complete operational control over my wake and sleep windows."
+            </p>
+</div>
+<div class="flex items-center gap-space-md pt-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center font-headline-sm text-headline-sm text-electric-cyan">
+              MK
+            </div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Marcus Kane</div>
+<div class="font-label-sm text-label-sm text-text-muted">Commercial Flight Specialist</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- BIOHACKER CONTACT & PROTOCOL DISPATCH -->
+<section class="w-full bg-surface-container-lowest py-space-3xl" id="contact">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-2xl bg-slate-surface p-space-xl md:p-space-2xl rounded-3xl shadow-2xl relative overflow-hidden">
+<div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary-container/10 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="lg:col-span-6 flex flex-col justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Connect with Hummingbird Lab</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-space-xs mb-space-md">
+              We Love Hearing From You!
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-space-lg">
+              Have questions regarding custom microdose protocols, enterprise athletic wholesale, or scientific research partnerships? Our bio-optimization engineers respond within 24 hours.
+            </p>
+<div class="flex flex-col gap-space-sm font-label-md text-label-md text-on-surface mb-space-xl">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">mail</span>
+<span>lab@hummingbirdfuel.com</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px]">location_on</span>
+<span>Neuro-Formulation Labs • Austin, TX &amp; Zurich, CH</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]">verified_user</span>
+<span>30-Day Full Efficacy Guarantee on All First Orders</span>
+</div>
+</div>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container flex items-center gap-space-md">
+<span class="material-symbols-outlined text-secondary text-[28px]">shield</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+              Every formula is 3rd-party lab tested for heavy metals, potency, and purity.
+            </span>
+</div>
+</div>
+<div class="lg:col-span-6">
+<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); alert('Message Transmitted to Bio-Optimization Team.');">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Your Name</label>
+<input class="w-full bg-surface-container px-space-md py-space-sm rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-high placeholder:text-text-muted" placeholder="e.g. Dr. Alex Mercer" required="" type="text"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Email Endpoint</label>
+<input class="w-full bg-surface-container px-space-md py-space-sm rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-high placeholder:text-text-muted" placeholder="alex@performance.bio" required="" type="email"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Subject / Inquiry Type</label>
+<select class="w-full bg-surface-container px-space-md py-space-sm rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-high">
+<option value="protocol">Dosage &amp; Protocol Advice</option>
+<option value="store">Order &amp; Shipping Support</option>
+<option value="wholesale">Athletic Team / Wholesale</option>
+<option value="press">Research &amp; Clinical Press</option>
+</select>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-1">Message</label>
+<textarea class="w-full bg-surface-container px-space-md py-space-sm rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:bg-surface-container-high placeholder:text-text-muted" placeholder="Describe your circadian schedule or partnership proposal..." required="" rows="4"></textarea>
+</div>
+<button class="w-full py-space-md rounded-lg bg-gradient-to-r from-primary-container to-secondary-container text-surface-container-lowest font-headline-sm text-headline-sm uppercase tracking-wide hover:brightness-110 shadow-lg transition-all flex items-center justify-center gap-space-xs" type="submit">
+<span class="material-symbols-outlined text-[20px]">send</span>
+              Transmit Message
+            </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- HIGH CONVERSION FINAL CALLOUT BANNER -->
+<section class="w-full bg-gradient-to-b from-surface-container-lowest to-surface py-space-3xl relative overflow-hidden">
+<div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin text-center relative z-10">
+<div class="inline-block px-space-md py-1 rounded-full bg-slate-surface text-primary font-label-sm text-label-sm uppercase tracking-widest mb-space-md">
+        Upgrade Human Vitality
+      </div>
+<h2 class="font-headline-lg md:font-display-xl text-headline-lg md:text-display-xl uppercase tracking-tight text-on-surface max-w-3xl mx-auto mb-space-md">
+        Master Your Energy. <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container via-secondary to-tertiary">
+          Reclaim Your Sleep.
+        </span>
+</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto mb-space-2xl">
+        Experience the precision power of AI-calibrated sublingual nutrition. Backed by science, engineered for human peak performance.
+      </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-space-md">
+<a class="w-full sm:w-auto px-space-2xl py-space-md rounded-lg bg-gradient-to-r from-primary-container to-secondary-container text-surface-container-lowest font-headline-sm text-headline-sm uppercase tracking-wider hover:brightness-110 shadow-2xl transition-all flex items-center justify-center gap-space-sm" href="#store">
+<span>Get Started Now</span>
+<span class="material-symbols-outlined">bolt</span>
+</a>
+<a class="w-full sm:w-auto px-space-xl py-space-md rounded-lg bg-slate-surface text-on-surface hover:bg-surface-bright font-label-lg text-label-lg uppercase tracking-wider transition-all" href="#contact">
+          Talk to a Biohacker
+        </a>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-space-lg mt-space-2xl text-text-muted font-label-sm text-label-sm uppercase">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-primary">verified</span> cGMP Facility</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-secondary">local_shipping</span> Fast Carbon-Neutral Shipping</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px] text-tertiary">replay</span> 30-Day Money-Back Guarantee</span>
+</div>
+</div>
+</section>
+</div>
+<script>
+  // Real-time interactive microdose dosimeter calculator
+  const slider = document.getElementById('spray-slider');
+  const countLabel = document.getElementById('spray-count-label');
+  const metricWindow = document.getElementById('metric-window');
+  const metricResistance = document.getElementById('metric-resistance');
+  const metricSleep = document.getElementById('metric-sleep');
+
+  if (slider) {
+    slider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      switch(val) {
+        case 1:
+          countLabel.innerText = '1 Spray (Micro Focus)';
+          metricWindow.innerText = '2.5 Hours';
+          metricResistance.innerText = '75% Precision';
+          metricSleep.innerText = 'Unaltered (Natural)';
+          break;
+        case 2:
+          countLabel.innerText = '2 Sprays (Peak Flow)';
+          metricWindow.innerText = '4.5 Hours';
+          metricResistance.innerText = '92% Precision';
+          metricSleep.innerText = 'Unaltered (Natural)';
+          break;
+        case 3:
+          countLabel.innerText = '3 Sprays (Deep Drive)';
+          metricWindow.innerText = '6.5 Hours';
+          metricResistance.innerText = '97% Sustained';
+          metricSleep.innerText = 'Sync with PM Spray';
+          break;
+        case 4:
+          countLabel.innerText = '4 Sprays (Hyper Metabolic)';
+          metricWindow.innerText = '8.0+ Hours';
+          metricResistance.innerText = '99.4% Total Drive';
+          metricSleep.innerText = 'Requires PM Spray Reset';
+          break;
+      }
+    });
+  }
+</script></main><footer class="w-full bg-surface-container-lowest text-on-surface-variant"><div class="w-full max-w-[1280px] mx-auto px-margin-mobile md:px-margin pt-space-3xl pb-space-2xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-space-xl mb-space-3xl"><div class="lg:col-span-5 flex flex-col items-start gap-space-md"><div class="flex items-center gap-space-sm"><img alt="Hummingbird Fuel Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XLi-jZTCiky9IhQb5zJtiwBMYASXOAJz0tXIAmozXDKLUJR9cLuI8CkR9v8CmnnDSOL5OmSZBLwDpNBGBn_iYOzf24lBrOSrlImaJPdYgqQAw_CcUI92BTyL9nSgtF8Mx9Z-DyaAbWa4fQcSweeu-ngQpmAzUWVSwvatt8n4EKrLSGrb0SrvuBEiWR3sPY9gcv7YWSp7A_4gbLn0qemdhqZBrresFpKgqJd-hL6NCPM5DaHCMAU-z0gQ"/><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">HUMMINGBIRD<span class="text-primary-container">.FUEL</span></span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-md">Artificial Intelligent Microdose Energy Spray — Energy All Day / Sleep All Night. High-performance biohacking, cognitive acceleration, and circadian rhythm optimization delivered at cellular speed.</p><div class="flex items-center gap-space-sm pt-space-xs"><div class="px-space-sm py-1 rounded bg-surface-container font-label-sm text-label-sm text-primary">99.8% BIOAVAILABILITY</div><div class="px-space-sm py-1 rounded bg-surface-container font-label-sm text-label-sm text-electric-cyan">SUBLINGUAL MIST</div></div></div><div class="lg:col-span-3 flex flex-col gap-space-md"><span class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">System Navigation</span><ul class="flex flex-col gap-space-sm"><li class="font-body-md text-body-md"><a class="hover:text-on-surface transition-colors" data-path="home" href="#">Formula Overview</a></li><li class="font-body-md text-body-md"><a class="hover:text-on-surface transition-colors" data-path="fuel" href="#">Science &amp; Clinical Trials</a></li><li class="font-body-md text-body-md"><a class="hover:text-on-surface transition-colors" data-path="store" href="#">Microdose Store</a></li><li class="font-body-md text-body-md"><a class="hover:text-on-surface transition-colors" data-path="contact" href="#">Biohacker Support</a></li></ul></div><div class="lg:col-span-4 flex flex-col gap-space-md"><span class="font-label-lg text-label-lg uppercase tracking-wider text-on-surface">Telemetry Dispatch</span><p class="font-body-sm text-body-sm text-on-surface-variant">Receive circadian timing protocols, metabolic optimization data, and early access batch alerts.</p><form class="flex flex-col sm:flex-row gap-space-xs w-full" onsubmit="return false;"><input class="w-full bg-slate-surface text-on-surface px-space-md py-space-sm rounded-lg font-label-md text-label-md focus:outline-none focus:bg-surface-container-high placeholder:text-on-surface-variant/40" placeholder="neuro@domain.com" required="" type="email"/><button class="px-space-lg py-space-sm rounded-lg bg-primary-container text-on-primary-container font-label-lg text-label-lg uppercase tracking-wide hover:bg-secondary-container hover:text-on-secondary-container transition-all flex items-center justify-center shrink-0" type="submit">Join</button></form><div class="flex items-center gap-space-md pt-space-xs text-on-surface-variant"><div class="flex items-center gap-1 font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-primary">verified</span>cGMP Certified</div><div class="flex items-center gap-1 font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-tertiary">biotech</span>Lab Tested</div><div class="flex items-center gap-1 font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px] text-electric-cyan">bolt</span>Rapid Delivery</div></div></div></div><div class="pt-space-xl flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm"><div class="text-on-surface-variant">© 2025 Hummingbird Fuel Inc. All rights reserved. Precision neuro-metabolic delivery systems.</div><div class="flex items-center gap-space-lg"><a class="hover:text-on-surface transition-colors" href="#">Privacy Policy</a><a class="hover:text-on-surface transition-colors" href="#">Terms of Service</a><a class="hover:text-on-surface transition-colors" href="#">Circadian Protocol</a></div></div></div></footer></body></html>
