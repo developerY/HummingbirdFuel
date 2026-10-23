@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CyberPhysicalScienceSubpage } from './CyberPhysicalScienceSubpage';
 
 interface ScienceScreenProps {
   onOrderClick: () => void;
@@ -9,6 +10,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
   onOrderClick,
   onSimulateSpray
 }) => {
+  const [scienceSubpage, setScienceSubpage] = useState<'cyberphysical' | 'delivery'>('cyberphysical');
   const [activeComparison, setActiveComparison] = useState<'spray' | 'capsule' | 'drink'>('spray');
   const [activePathwayTab, setActivePathwayTab] = useState<'sublingual' | 'gastric'>('sublingual');
   const [activeIngredientPillar, setActiveIngredientPillar] = useState<'day' | 'night'>('day');
@@ -16,22 +18,86 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
   return (
     <div className="w-full bg-[#0e0e10] py-12 md:py-20 text-[#e5e1e4]">
       <div className="w-full max-w-[1280px] mx-auto px-5 md:px-12">
-        {/* Screen Header */}
-        <div className="max-w-3xl mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121318] border border-[#282a36] text-[#ffb59e] font-['JetBrains_Mono'] text-xs uppercase tracking-widest mb-4">
-            <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
-            Pharmacokinetics &amp; Clinical Neuro-Metabolics
+        {/* Top Subpage Navigation Switcher */}
+        <div className="mb-10 p-2 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <button
+              onClick={() => {
+                setScienceSubpage('cyberphysical');
+              }}
+              className={`p-4 rounded-xl text-left transition-all cursor-pointer border ${
+                scienceSubpage === 'cyberphysical'
+                  ? 'bg-[#1c1b1d] border-[#ff5a1f] shadow-lg shadow-[#ff5a1f]/10'
+                  : 'bg-transparent border-transparent hover:bg-[#181920]'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1.5">
+                <span className={`text-[11px] font-['JetBrains_Mono'] uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold ${
+                  scienceSubpage === 'cyberphysical' ? 'bg-[#ff5a1f]/20 text-[#ff5a1f] border border-[#ff5a1f]/40' : 'text-[#8d90a5]'
+                }`}>
+                  Subpage 01 • Clinical Architecture
+                </span>
+                <span className="material-symbols-outlined text-[20px] text-[#ffb59e]">memory</span>
+              </div>
+              <h3 className="font-['Space_Grotesk'] text-lg md:text-xl font-bold text-[#e5e1e4]">
+                Cyber-Physical PK/PD Systems &amp; Clinical Reality Explorer
+              </h3>
+              <p className="font-['Manrope'] text-xs text-[#8d90a5] mt-1 leading-relaxed">
+                Closed-loop Bateman PK/PD simulator, sensor ingestion latency, McCarthy 2025 hardware, ADHD/oncology verticals, and 2026 FDA Section 520(o) engine.
+              </p>
+            </button>
+
+            <button
+              onClick={() => {
+                setScienceSubpage('delivery');
+              }}
+              className={`p-4 rounded-xl text-left transition-all cursor-pointer border ${
+                scienceSubpage === 'delivery'
+                  ? 'bg-[#1c1b1d] border-[#00f0ff] shadow-lg shadow-[#00f0ff]/10'
+                  : 'bg-transparent border-transparent hover:bg-[#181920]'
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1.5">
+                <span className={`text-[11px] font-['JetBrains_Mono'] uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold ${
+                  scienceSubpage === 'delivery' ? 'bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40' : 'text-[#8d90a5]'
+                }`}>
+                  Subpage 02 • Cellular Delivery
+                </span>
+                <span className="material-symbols-outlined text-[20px] text-[#00f0ff]">biotech</span>
+              </div>
+              <h3 className="font-['Space_Grotesk'] text-lg md:text-xl font-bold text-[#e5e1e4]">
+                Sublingual Bio-Delivery &amp; Active Matrices
+              </h3>
+              <p className="font-['Manrope'] text-xs text-[#8d90a5] mt-1 leading-relaxed">
+                90-second lingual venous bypass, elimination of hepatic first-pass loss, AM/PM molecular formulations, and human wearable telemetry data.
+              </p>
+            </button>
           </div>
-          <h1 className="font-['Space_Grotesk'] text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#e5e1e4] mb-4">
-            The Science of <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5a1f] via-[#ffb77f] to-[#00f0ff]">
-              Sublingual Micro-Mist
-            </span>
-          </h1>
-          <p className="font-['Manrope'] text-base md:text-lg text-[#e4beb3]/80 leading-relaxed">
-            Why bypass the gastrointestinal tract entirely? The sublingual mucosa provides a direct, non-invasive conduit to the internal jugular and cerebral circulation — delivering unadulterated nootropic molecules into the bloodstream in under 90 seconds while eliminating hepatic first-pass loss.
-          </p>
         </div>
+
+        {scienceSubpage === 'cyberphysical' ? (
+          <CyberPhysicalScienceSubpage
+            onOrderClick={onOrderClick}
+            onSimulateSpray={onSimulateSpray}
+          />
+        ) : (
+          <div>
+            {/* Screen Header */}
+            <div className="max-w-3xl mb-14">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121318] border border-[#282a36] text-[#ffb59e] font-['JetBrains_Mono'] text-xs uppercase tracking-widest mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
+                Pharmacokinetics &amp; Clinical Neuro-Metabolics
+              </div>
+              <h1 className="font-['Space_Grotesk'] text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#e5e1e4] mb-4">
+                The Science of <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5a1f] via-[#ffb77f] to-[#00f0ff]">
+                  Sublingual Micro-Mist
+                </span>
+              </h1>
+              <p className="font-['Manrope'] text-base md:text-lg text-[#e4beb3]/80 leading-relaxed">
+                Why bypass the gastrointestinal tract entirely? The sublingual mucosa provides a direct, non-invasive conduit to the internal jugular and cerebral circulation — delivering unadulterated nootropic molecules into the bloodstream in under 90 seconds while eliminating hepatic first-pass loss.
+              </p>
+            </div>
 
         {/* SECTION 1: Interactive Pharmacokinetic Absorption Curve */}
         <div className="p-6 md:p-10 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl mb-16">
@@ -467,6 +533,8 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
           </div>
         </div>
       </div>
-    </div>
-  );
+    )}
+  </div>
+</div>
+);
 };
