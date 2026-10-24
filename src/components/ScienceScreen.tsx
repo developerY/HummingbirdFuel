@@ -1,197 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import { CyberPhysicalScienceSubpage, CyberPhysicalSubTab } from './CyberPhysicalScienceSubpage';
+import React, { useState } from 'react';
 import { buildAbsoluteUrl } from '../utils/router';
 
 interface ScienceScreenProps {
   onOrderClick: () => void;
   onSimulateSpray: () => void;
-  activeSubpage?: string;
-  activeSubtab?: string;
-  onNavigateSubpage?: (subpage: string, subtab?: string) => void;
+  onNavigateToCyberPhysical?: () => void;
   onShowToast?: (message: string) => void;
 }
 
 export const ScienceScreen: React.FC<ScienceScreenProps> = ({
   onOrderClick,
   onSimulateSpray,
-  activeSubpage,
-  activeSubtab,
-  onNavigateSubpage,
+  onNavigateToCyberPhysical,
   onShowToast,
 }) => {
-  const [scienceSubpage, setScienceSubpage] = useState<'cyberphysical' | 'delivery'>(
-    activeSubpage === 'delivery' ? 'delivery' : 'cyberphysical'
-  );
   const [activeComparison, setActiveComparison] = useState<'spray' | 'capsule' | 'drink'>('spray');
-  const [activePathwayTab, setActivePathwayTab] = useState<'sublingual' | 'gastric'>('sublingual');
   const [activeIngredientPillar, setActiveIngredientPillar] = useState<'day' | 'night'>('day');
 
-  useEffect(() => {
-    if (activeSubpage === 'delivery' || activeSubpage === 'cyberphysical') {
-      setScienceSubpage(activeSubpage);
-    }
-  }, [activeSubpage]);
-
-  const handleSubpageSwitch = (subpage: 'cyberphysical' | 'delivery') => {
-    setScienceSubpage(subpage);
-    if (subpage === 'cyberphysical') {
-      onNavigateSubpage?.('cyberphysical', activeSubtab || 'overview');
-    } else {
-      onNavigateSubpage?.('delivery');
-    }
+  const handleShareScience = () => {
+    const url = buildAbsoluteUrl({ screen: 'science' });
+    navigator.clipboard.writeText(url).then(() => {
+      onShowToast?.(`Deep link copied: ${url}`);
+    });
   };
 
-  const handleCopySubtabLink = (tab: CyberPhysicalSubTab) => {
-    const fullUrl = buildAbsoluteUrl({
-      screen: 'fuel',
-      subpage: 'cyberphysical',
-      subtab: tab,
-    });
-    navigator.clipboard.writeText(fullUrl).then(() => {
-      onShowToast?.(`Deep link copied: ${fullUrl}`);
-    });
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
     <div className="w-full bg-[#0e0e10] py-8 md:py-14 text-[#e5e1e4]">
       <div className="w-full max-w-[1280px] mx-auto px-5 md:px-12">
-        {/* Normal Tab Menu Navigation */}
-        <div className="mb-8 border-b border-[#282a36]">
-          {/* Primary Science Tabs */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 sm:gap-6 overflow-x-auto scrollbar-none">
-              <button
-                type="button"
-                onClick={() => handleSubpageSwitch('cyberphysical')}
-                className={`py-3.5 px-3 font-['Space_Grotesk'] text-base md:text-lg font-bold transition-all relative flex items-center gap-2 cursor-pointer border-b-2 whitespace-nowrap ${
-                  scienceSubpage === 'cyberphysical'
-                    ? 'border-[#ff5a1f] text-[#ff5a1f]'
-                    : 'border-transparent text-[#8d90a5] hover:text-[#e5e1e4]'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[20px]">memory</span>
-                <span>Cyber-Physical PK/PD Systems</span>
-                <span className="text-[10px] font-['JetBrains_Mono'] px-2 py-0.5 rounded-full bg-[#ff5a1f]/10 text-[#ffb59e] border border-[#ff5a1f]/30 font-semibold hidden md:inline-block">
-                  Sub-Menu (6)
-                </span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleSubpageSwitch('delivery')}
-                className={`py-3.5 px-3 font-['Space_Grotesk'] text-base md:text-lg font-bold transition-all relative flex items-center gap-2 cursor-pointer border-b-2 whitespace-nowrap ${
-                  scienceSubpage === 'delivery'
-                    ? 'border-[#00f0ff] text-[#00f0ff]'
-                    : 'border-transparent text-[#8d90a5] hover:text-[#e5e1e4]'
-                }`}
-              >
-                <span className="material-symbols-outlined text-[20px]">biotech</span>
-                <span>Sublingual Cellular Delivery</span>
-                <span className="text-[10px] font-['JetBrains_Mono'] px-2 py-0.5 rounded-full bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30 font-semibold hidden md:inline-block">
-                  Formulations
-                </span>
-              </button>
-            </div>
-
-            {/* Quick Share Link */}
-            <div className="flex items-center gap-2 pb-2 sm:pb-0">
-              <button
-                onClick={() => {
-                  const url = buildAbsoluteUrl({
-                    screen: 'fuel',
-                    subpage: scienceSubpage,
-                    subtab: scienceSubpage === 'cyberphysical' ? (activeSubtab || 'overview') : undefined,
-                  });
-                  navigator.clipboard.writeText(url);
-                  onShowToast?.(`Copied deep link: ${url}`);
-                }}
-                className="text-xs font-['JetBrains_Mono'] text-[#ffb59e] hover:text-[#ff5a1f] flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1c1b1d] border border-[#282a36] hover:border-[#ff5a1f]/40 transition-all cursor-pointer shrink-0"
-              >
-                <span className="material-symbols-outlined text-[15px]">share</span>
-                <span className="hidden sm:inline">Share Tab</span>
-              </button>
-            </div>
+        {/* Page Top Sub-Menu Strip */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 mb-8 pb-4 border-b border-[#282a36]">
+          <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none font-['JetBrains_Mono'] text-xs pb-1 lg:pb-0">
+            <span className="text-[#8d90a5] text-[11px] uppercase tracking-wider mr-1 shrink-0">Sub-Menu:</span>
+            <button
+              onClick={() => scrollToSection('pk-curve')}
+              className="px-3 py-1.5 rounded-lg bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+            >
+              01. PK Absorption Curve
+            </button>
+            <button
+              onClick={() => scrollToSection('venous-route')}
+              className="px-3 py-1.5 rounded-lg bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+            >
+              02. Venous Route vs. Liver
+            </button>
+            <button
+              onClick={() => scrollToSection('active-matrix')}
+              className="px-3 py-1.5 rounded-lg bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+            >
+              03. Dual Molecular Matrix
+            </button>
+            <button
+              onClick={() => scrollToSection('clinical-telemetry')}
+              className="px-3 py-1.5 rounded-lg bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+            >
+              04. Wearable Telemetry
+            </button>
+            <button
+              onClick={() => scrollToSection('clinical-citations')}
+              className="px-3 py-1.5 rounded-lg bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+            >
+              05. Peer References
+            </button>
           </div>
 
-          {/* Sub Menu for Sublingual Delivery */}
-          {scienceSubpage === 'delivery' && (
-            <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-none font-['JetBrains_Mono'] text-xs border-t border-[#282a36]/50 mt-1">
-              <span className="text-[#8d90a5] text-[11px] uppercase tracking-wider mr-1 shrink-0">Sub-Menu:</span>
+          <div className="flex items-center gap-2 shrink-0 self-end lg:self-auto">
+            {onNavigateToCyberPhysical && (
               <button
-                onClick={() => {
-                  const el = document.getElementById('pk-curve');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+                onClick={onNavigateToCyberPhysical}
+                className="text-xs font-['JetBrains_Mono'] text-[#ffb59e] hover:text-[#ff5a1f] flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#16171d] border border-[#ff5a1f]/30 hover:border-[#ff5a1f] transition-all cursor-pointer"
               >
-                01. PK Absorption Curve
+                <span className="material-symbols-outlined text-[15px] text-[#ff5a1f]">memory</span>
+                <span>Cyber-Physical Page →</span>
               </button>
-              <button
-                onClick={() => {
-                  const el = document.getElementById('venous-route');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
-              >
-                02. Venous Route vs. Liver
-              </button>
-              <button
-                onClick={() => {
-                  const el = document.getElementById('active-matrix');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
-              >
-                03. Dual Molecular Matrix
-              </button>
-              <button
-                onClick={() => {
-                  const el = document.getElementById('clinical-telemetry');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
-              >
-                04. Wearable Telemetry
-              </button>
-              <button
-                onClick={() => {
-                  const el = document.getElementById('clinical-citations');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
-              >
-                05. Peer References
-              </button>
-            </div>
-          )}
+            )}
+
+            <button
+              onClick={handleShareScience}
+              className="text-xs font-['JetBrains_Mono'] text-[#8d90a5] hover:text-[#e5e1e4] flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1c1b1d] border border-[#282a36] hover:border-[#8d90a5]/50 transition-all cursor-pointer shrink-0"
+            >
+              <span className="material-symbols-outlined text-[15px]">share</span>
+              <span>Share Page</span>
+            </button>
+          </div>
         </div>
 
-        {scienceSubpage === 'cyberphysical' ? (
-          <CyberPhysicalScienceSubpage
-            onOrderClick={onOrderClick}
-            onSimulateSpray={onSimulateSpray}
-            activeSubTab={activeSubtab as CyberPhysicalSubTab}
-            onSubTabChange={(tab) => onNavigateSubpage?.('cyberphysical', tab)}
-            onCopyDeepLink={handleCopySubtabLink}
-          />
-        ) : (
-          <div>
-            {/* Screen Header */}
-            <div className="max-w-3xl mb-14">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121318] border border-[#282a36] text-[#ffb59e] font-['JetBrains_Mono'] text-xs uppercase tracking-widest mb-4">
-                <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
-                Pharmacokinetics &amp; Clinical Neuro-Metabolics
-              </div>
-              <h1 className="font-['Space_Grotesk'] text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#e5e1e4] mb-4">
-                The Science of <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5a1f] via-[#ffb77f] to-[#00f0ff]">
-                  Sublingual Micro-Mist
-                </span>
-              </h1>
-              <p className="font-['Manrope'] text-base md:text-lg text-[#e4beb3]/80 leading-relaxed">
-                Why bypass the gastrointestinal tract entirely? The sublingual mucosa provides a direct, non-invasive conduit to the internal jugular and cerebral circulation — delivering unadulterated nootropic molecules into the bloodstream in under 90 seconds while eliminating hepatic first-pass loss.
-              </p>
-            </div>
+        {/* Screen Header */}
+        <div className="max-w-3xl mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#121318] border border-[#282a36] text-[#ffb59e] font-['JetBrains_Mono'] text-xs uppercase tracking-widest mb-4">
+            <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
+            Pharmacokinetics &amp; Clinical Neuro-Metabolics
+          </div>
+          <h1 className="font-['Space_Grotesk'] text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-tight text-[#e5e1e4] mb-4">
+            The Science of <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff5a1f] via-[#ffb77f] to-[#00f0ff]">
+              Sublingual Micro-Mist
+            </span>
+          </h1>
+          <p className="font-['Manrope'] text-base md:text-lg text-[#e4beb3]/80 leading-relaxed">
+            Why bypass the gastrointestinal tract entirely? The sublingual mucosa provides a direct, non-invasive conduit to the internal jugular and cerebral circulation — delivering unadulterated nootropic molecules into the bloodstream in under 90 seconds while eliminating hepatic first-pass loss.
+          </p>
+        </div>
 
         {/* SECTION 1: Interactive Pharmacokinetic Absorption Curve */}
         <div id="pk-curve" className="p-6 md:p-10 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl mb-16 scroll-mt-24">
@@ -600,6 +515,32 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
           </ul>
         </div>
 
+        {/* Cross-Link Banner to Cyber-Physical Architecture Page */}
+        {onNavigateToCyberPhysical && (
+          <div className="mb-14 p-6 sm:p-8 rounded-2xl bg-[#14151c] border border-[#ff5a1f]/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#ff5a1f]/15 border border-[#ff5a1f]/30 flex items-center justify-center text-[#ff5a1f] shrink-0">
+                <span className="material-symbols-outlined text-[28px]">memory</span>
+              </div>
+              <div>
+                <h4 className="font-['Space_Grotesk'] text-lg font-bold text-[#e5e1e4]">
+                  Interested in Closed-Loop Telemetry &amp; Pharmacokinetics?
+                </h4>
+                <p className="font-['Manrope'] text-xs text-[#e4beb3]/80">
+                  Explore our dedicated Cyber-Physical Systems page featuring the live Bateman PK/PD simulator, McCarthy hardware, and FDA 2026 diagnostic engine.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={onNavigateToCyberPhysical}
+              className="px-5 py-2.5 rounded-lg bg-[#201f21] border border-[#ff5a1f]/40 hover:bg-[#ff5a1f] text-[#ffb59e] hover:text-[#0e0e10] font-['Space_Grotesk'] font-bold text-xs uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap"
+            >
+              Open Cyber-Physical Page →
+            </button>
+          </div>
+        )}
+
         {/* CTA Conversion Box */}
         <div className="p-8 md:p-12 rounded-3xl bg-gradient-to-r from-[#121318] to-[#1a1c24] border border-[#ff5a1f]/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
           <div>
@@ -627,8 +568,6 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
           </div>
         </div>
       </div>
-    )}
-  </div>
-</div>
-);
+    </div>
+  );
 };

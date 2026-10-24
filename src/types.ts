@@ -41,4 +41,4 @@ export interface Testimonial {
   colorClass: string;
 }
 
-export type ActiveScreen = 'home' | 'fuel' | 'store' | 'contact';
+export type ActiveScreen = 'home' | 'store' | 'science' | 'cyberphysical' | 'contact' | 'fuel';

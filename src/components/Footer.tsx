@@ -34,15 +34,13 @@ export const Footer: React.FC<FooterProps> = ({
             <button
               onClick={() => onNavigate('home')}
               className="flex items-center gap-2 cursor-pointer text-left"
+              title="Hummingbird Fuel"
             >
               <img
                 alt="Hummingbird Fuel Logo"
                 className="h-8 w-auto object-contain"
                 src="https://lh3.googleusercontent.com/aida/AEtjO1XLi-jZTCiky9IhQb5zJtiwBMYASXOAJz0tXIAmozXDKLUJR9cLuI8CkR9v8CmnnDSOL5OmSZBLwDpNBGBn_iYOzf24lBrOSrlImaJPdYgqQAw_CcUI92BTyL9nSgtF8Mx9Z-DyaAbWa4fQcSweeu-ngQpmAzUWVSwvatt8n4EKrLSGrb0SrvuBEiWR3sPY9gcv7YWSp7A_4gbLn0qemdhqZBrresFpKgqJd-hL6NCPM5DaHCMAU-z0gQ"
               />
-              <span className="font-['Space_Grotesk'] text-xl font-bold text-[#e5e1e4] tracking-tight">
-                HUMMINGBIRD<span className="text-[#ff5a1f]">.FUEL</span>
-              </span>
             </button>
 
             <p className="font-['Manrope'] text-sm text-[#e4beb3]/80 max-w-md leading-relaxed">
@@ -75,10 +73,18 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button
-                  onClick={() => onNavigate('fuel')}
+                  onClick={() => onNavigate('science')}
                   className="hover:text-[#ff5a1f] transition-colors cursor-pointer text-left"
                 >
-                  Science &amp; Clinical Trials
+                  Science • Sublingual Delivery
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onNavigate('cyberphysical')}
+                  className="hover:text-[#ff5a1f] transition-colors cursor-pointer text-left"
+                >
+                  Cyber-Physical Systems &amp; Clinical
                 </button>
               </li>
               <li>
@@ -86,7 +92,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigate('store')}
                   className="hover:text-[#ff5a1f] transition-colors cursor-pointer text-left"
                 >
-                  Microdose Store
+                  Microdose Store &amp; Hardware
                 </button>
               </li>
               <li>
@@ -94,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({
                   onClick={() => onNavigate('contact')}
                   className="hover:text-[#ff5a1f] transition-colors cursor-pointer text-left"
                 >
-                  Biohacker Support &amp; Lab
+                  Biohacker Concierge &amp; Lab
                 </button>
               </li>
             </ul>
@@ -119,58 +125,50 @@ export const Footer: React.FC<FooterProps> = ({
                 type="email"
               />
               <button
-                className="px-6 py-2.5 rounded-lg bg-[#ff5a1f] text-[#541400] font-['Space_Grotesk'] font-bold text-xs uppercase tracking-wider hover:bg-[#ff8a00] transition-all flex items-center justify-center shrink-0 cursor-pointer shadow-md"
                 type="submit"
+                className="px-5 py-2.5 rounded-lg bg-[#ff5a1f] hover:bg-[#ff8a00] text-[#0e0e10] font-['Space_Grotesk'] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap shadow-md"
               >
-                {subscribed ? 'Subscribed' : 'Join'}
+                {subscribed ? 'Connected' : 'Subscribe'}
               </button>
             </form>
-            {subscribed && (
-              <span className="text-xs font-['JetBrains_Mono'] text-[#ffb59e] animate-fadeIn">
-                Protocol link dispatched to your inbox.
-              </span>
-            )}
 
-            <div className="flex items-center gap-4 pt-1 text-[#8d90a5] font-['JetBrains_Mono'] text-xs">
-              <div className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px] text-[#ffb59e]">verified</span>
-                <span>cGMP Certified</span>
+            <div className="flex items-center gap-4 text-xs font-['JetBrains_Mono'] text-[#8d90a5] pt-2">
+              <div className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[15px] text-[#ffb59e]">lock</span>
+                <span>Zero spam</span>
               </div>
-              <div className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px] text-[#ffb95a]">biotech</span>
-                <span>Lab Tested</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="material-symbols-outlined text-[16px] text-[#00f0ff]">bolt</span>
-                <span>Rapid Delivery</span>
+              <div className="flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[15px] text-[#ffb59e]">verified</span>
+                <span>Encrypted</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Legal Bar */}
-        <div className="pt-8 border-t border-[#282a36]/60 flex flex-col md:flex-row items-center justify-between gap-4 font-['Manrope'] text-xs">
-          <div className="text-[#8d90a5]">
-            © {new Date().getFullYear()} Hummingbird Fuel Inc. All rights reserved. Precision neuro-metabolic delivery systems.
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-[#282a36]/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-['JetBrains_Mono'] text-[#8d90a5]">
+          <div>
+            © 2026 Hummingbird Fuel Inc. All rights reserved. Sublingual Microdose Delivery.
           </div>
+
           <div className="flex items-center gap-6">
             <button
               onClick={onOpenPrivacy}
-              className="text-[#8d90a5] hover:text-[#e5e1e4] transition-colors cursor-pointer"
+              className="hover:text-[#e5e1e4] transition-colors cursor-pointer"
             >
               Privacy Policy
             </button>
             <button
               onClick={onOpenTerms}
-              className="text-[#8d90a5] hover:text-[#e5e1e4] transition-colors cursor-pointer"
+              className="hover:text-[#e5e1e4] transition-colors cursor-pointer"
             >
               Terms of Service
             </button>
             <button
-              onClick={() => onNavigate('fuel')}
-              className="text-[#8d90a5] hover:text-[#ff5a1f] transition-colors cursor-pointer"
+              onClick={() => onNavigate('contact')}
+              className="hover:text-[#ff5a1f] transition-colors cursor-pointer"
             >
-              Circadian Protocol
+              Contact Support
             </button>
           </div>
         </div>

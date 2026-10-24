@@ -162,19 +162,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center">
               <button
                 type="button"
-                onClick={handleToggleStore}
-                className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-1 flex items-center gap-1 focus:outline-none select-none ${
+                onClick={() => handleNavigate({ screen: 'store', subpage: 'all' })}
+                className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-2 focus:outline-none select-none ${
                   isStoreActive ? 'text-[#ff5a1f] font-semibold' : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
                 }`}
               >
                 <span>Store</span>
-                <span
-                  className={`material-symbols-outlined text-[18px] transition-transform duration-200 text-[#ffb59e] ${
-                    storeMenuOpen ? 'rotate-180 text-[#ff5a1f]' : ''
-                  }`}
-                >
-                  expand_more
-                </span>
                 {isStoreActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] rounded-full" />
                 )}
@@ -303,19 +296,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center">
               <button
                 type="button"
-                onClick={handleToggleScience}
-                className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-1 flex items-center gap-1.5 focus:outline-none select-none ${
+                onClick={() => handleNavigate({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })}
+                className={`font-['Manrope'] text-[14px] lg:text-[15px] transition-all cursor-pointer relative py-2 focus:outline-none select-none ${
                   isScienceActive ? 'text-[#ff5a1f] font-semibold' : 'text-[#e4beb3]/80 hover:text-[#e5e1e4]'
                 }`}
               >
                 <span>Science</span>
-                <span
-                  className={`material-symbols-outlined text-[18px] transition-transform duration-200 text-[#ffb59e] ${
-                    scienceMenuOpen ? 'rotate-180 text-[#ff5a1f]' : ''
-                  }`}
-                >
-                  expand_more
-                </span>
                 {isScienceActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#ff5a1f] to-[#ff8a00] rounded-full" />
                 )}

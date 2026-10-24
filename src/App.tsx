@@ -19,6 +19,7 @@ import { CheckoutModal } from './components/CheckoutModal';
 import { ProductModal } from './components/ProductModal';
 import { SprayDemoModal } from './components/SprayDemoModal';
 import { ScienceScreen } from './components/ScienceScreen';
+import { CyberPhysicalScreen } from './components/CyberPhysicalScreen';
 import { StoreScreen } from './components/StoreScreen';
 import { ContactScreen } from './components/ContactScreen';
 import { ProfileDrawer } from './components/ProfileDrawer';
@@ -136,7 +137,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#131315] text-[#e5e1e4] flex flex-col font-['Manrope'] selection:bg-[#ff5a1f] selection:text-[#541400]">
-      {/* Sticky Glassmorphic Navbar with Subpage Mega Menus & Command Palette */}
+      {/* Sticky Glassmorphic Navbar with Distinct Sub-Menus & Command Palette */}
       <Navbar
         currentRoute={route}
         onNavigateRoute={handleNavigateRoute}
@@ -163,14 +164,14 @@ export default function App() {
                 handleNavigateRoute({ screen: 'store', subpage: 'all' });
               }}
               onExploreScienceClick={() => {
-                handleNavigateRoute({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' });
+                handleNavigateRoute({ screen: 'science' });
               }}
               onSimulateSpray={() => setIsSprayDemoOpen(true)}
             />
 
             <MicrodoseCalculator onSimulateSpray={() => setIsSprayDemoOpen(true)} />
 
-            <CircadianProtocol onLearnMore={() => handleNavigateRoute({ screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' })} />
+            <CircadianProtocol onLearnMore={() => handleNavigateRoute({ screen: 'science' })} />
 
             <DeliveryPhysics />
 
@@ -198,17 +199,16 @@ export default function App() {
           </>
         )}
 
-        {route.screen === 'fuel' && (
+        {/* Dedicated Science Page (Sublingual Cellular Delivery) */}
+        {(route.screen === 'science' || route.screen === 'fuel') && (
           <>
             <ScienceScreen
               onOrderClick={() => {
                 handleNavigateRoute({ screen: 'store', subpage: 'all' });
               }}
               onSimulateSpray={() => setIsSprayDemoOpen(true)}
-              activeSubpage={route.subpage}
-              activeSubtab={route.subtab}
-              onNavigateSubpage={(subpage, subtab) => {
-                handleNavigateRoute({ screen: 'fuel', subpage, subtab });
+              onNavigateToCyberPhysical={() => {
+                handleNavigateRoute({ screen: 'cyberphysical', subtab: 'overview' });
               }}
               onShowToast={showToast}
             />
@@ -222,6 +222,31 @@ export default function App() {
           </>
         )}
 
+        {/* Dedicated Cyber-Physical Systems & Clinical Explorer Page */}
+        {route.screen === 'cyberphysical' && (
+          <>
+            <CyberPhysicalScreen
+              activeSubtab={route.subtab || 'overview'}
+              onNavigateSubtab={(subtab) => {
+                handleNavigateRoute({ screen: 'cyberphysical', subtab });
+              }}
+              onOrderClick={() => {
+                handleNavigateRoute({ screen: 'store', subpage: 'all' });
+              }}
+              onSimulateSpray={() => setIsSprayDemoOpen(true)}
+              onNavigateToScience={() => {
+                handleNavigateRoute({ screen: 'science' });
+              }}
+              onShowToast={showToast}
+            />
+            <FinalBanner
+              onGetStarted={() => handleNavigateRoute({ screen: 'store', subpage: 'all' })}
+              onTalkToBiohacker={() => handleNavigateRoute({ screen: 'contact' })}
+            />
+          </>
+        )}
+
+        {/* Dedicated Store Page */}
         {route.screen === 'store' && (
           <>
             <StoreScreen
@@ -242,6 +267,7 @@ export default function App() {
           </>
         )}
 
+        {/* Dedicated Contact Page */}
         {route.screen === 'contact' && (
           <>
             <ContactScreen />

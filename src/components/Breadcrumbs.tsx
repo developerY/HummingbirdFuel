@@ -12,20 +12,20 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   onNavigate,
   onShowToast,
 }) => {
-  // If at root home, don't clutter the hero, or render minimal status
+  // If at root home, don't show breadcrumb
   if (currentRoute.screen === 'home') {
     return null;
   }
 
   const screenLabels: Record<string, string> = {
     store: 'Store',
-    fuel: 'Science Hub',
+    science: 'Science • Sublingual Delivery',
+    cyberphysical: 'Cyber-Physical Systems',
+    fuel: 'Science • Sublingual Delivery',
     contact: 'Contact & Concierge',
   };
 
   const subpageLabels: Record<string, string> = {
-    cyberphysical: 'Cyber-Physical Systems & Clinical Explorer',
-    delivery: 'Sublingual Cellular Delivery',
     all: 'All Products',
     kit: 'Circadian Starter Kits',
     day: 'AM Day Fuel',
@@ -36,12 +36,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   };
 
   const subtabLabels: Record<string, string> = {
-    overview: 'Reality Matrix',
-    ingestion: 'Sensors & Pipeline',
-    algorithm: 'Bateman PK/PD Simulator',
-    delivery: 'Spray Kinetics & McCarthy Hardware',
-    clinical: 'Clinical Verticals (ADHD / Oncology)',
-    regulatory: '2026 FDA Section 520(o) Engine',
+    overview: '01. Reality Matrix',
+    ingestion: '02. Sensors & Pipeline',
+    algorithm: '03. Bateman PK/PD Simulator',
+    delivery: '04. McCarthy Hardware & Spray Kinetics',
+    clinical: '05. Clinical Verticals (ADHD / Oncology)',
+    regulatory: '06. 2026 FDA Section 520(o) Engine',
   };
 
   const handleCopyCurrentLink = () => {
@@ -49,6 +49,18 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     navigator.clipboard.writeText(fullUrl).then(() => {
       onShowToast(`Deep link copied to clipboard: ${fullUrl}`);
     });
+  };
+
+  const handleScreenClick = () => {
+    if (currentRoute.screen === 'cyberphysical') {
+      onNavigate({ screen: 'cyberphysical', subtab: 'overview' });
+    } else if (currentRoute.screen === 'science' || currentRoute.screen === 'fuel') {
+      onNavigate({ screen: 'science' });
+    } else if (currentRoute.screen === 'store') {
+      onNavigate({ screen: 'store', subpage: 'all' });
+    } else {
+      onNavigate({ screen: currentRoute.screen });
+    }
   };
 
   return (
@@ -71,36 +83,34 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
           {/* Screen Link */}
           <button
-            onClick={() => onNavigate({ screen: currentRoute.screen })}
+            onClick={handleScreenClick}
             className={`hover:text-[#ff5a1f] transition-colors cursor-pointer ${
-              !currentRoute.subpage ? 'text-[#ff5a1f] font-semibold' : ''
+              !currentRoute.subpage && !currentRoute.subtab ? 'text-[#ff5a1f] font-semibold' : ''
             }`}
           >
             {screenLabels[currentRoute.screen] || currentRoute.screen}
           </button>
 
-          {/* Subpage Link if present */}
-          {currentRoute.subpage && (
+          {/* Store Subpage Link if present */}
+          {currentRoute.screen === 'store' && currentRoute.subpage && (
             <>
               <span className="text-[#3b3c4a]">/</span>
               <button
                 onClick={() =>
                   onNavigate({
-                    screen: currentRoute.screen,
+                    screen: 'store',
                     subpage: currentRoute.subpage,
                   })
                 }
-                className={`hover:text-[#ff5a1f] transition-colors cursor-pointer ${
-                  !currentRoute.subtab ? 'text-[#ff5a1f] font-semibold' : ''
-                }`}
+                className="text-[#ff5a1f] font-semibold hover:text-[#ffb77f] transition-colors cursor-pointer"
               >
                 {subpageLabels[currentRoute.subpage] || currentRoute.subpage}
               </button>
             </>
           )}
 
-          {/* Subtab Link if present */}
-          {currentRoute.subtab && (
+          {/* Cyber-Physical Subtab Link if present */}
+          {currentRoute.screen === 'cyberphysical' && currentRoute.subtab && (
             <>
               <span className="text-[#3b3c4a]">/</span>
               <span className="text-[#ffb59e] font-semibold">

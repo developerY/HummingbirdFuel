@@ -10,7 +10,7 @@ export interface RouteState {
 export interface NavDestination {
   id: string;
   title: string;
-  category: 'Pages' | 'Science Subpages' | 'Store Categories' | 'Interactive Tools';
+  category: 'Pages' | 'Cyber-Physical Modules' | 'Store Categories' | 'Interactive Tools';
   description: string;
   icon: string;
   route: RouteState;
@@ -20,7 +20,12 @@ export interface NavDestination {
 
 /**
  * Parses current location hash into structured route
- * e.g. #/science/cyberphysical/algorithm
+ * Supports independent screens:
+ * - #/science
+ * - #/cyber-physical (or #/cyber-physical/:subtab)
+ * - #/store (or #/store/:category)
+ * - #/contact
+ * - #/
  */
 export function parseRoute(rawHash?: string): RouteState {
   const hash = rawHash !== undefined ? rawHash : (typeof window !== 'undefined' ? window.location.hash : '');
@@ -43,17 +48,32 @@ export function parseRoute(rawHash?: string): RouteState {
 
   const root = segments[0]?.toLowerCase();
 
-  if (root === 'science' || root === 'fuel') {
-    const subpage = segments[1]?.toLowerCase() || 'cyberphysical';
-    const subtab = segments[2]?.toLowerCase() || (subpage === 'cyberphysical' ? 'overview' : undefined);
+  // Cyber-Physical Systems (Dedicated Page)
+  if (root === 'cyber-physical' || root === 'cyberphysical' || root === 'clinical-explorer') {
+    const subtab = segments[1]?.toLowerCase() || 'overview';
     return {
-      screen: 'fuel',
-      subpage,
+      screen: 'cyberphysical',
       subtab,
       query,
     };
   }
 
+  // Science / Sublingual Cellular Delivery (Dedicated Page)
+  if (root === 'science' || root === 'fuel' || root === 'delivery') {
+    if (segments[1]?.toLowerCase() === 'cyberphysical' || segments[1]?.toLowerCase() === 'cyber-physical') {
+      return {
+        screen: 'cyberphysical',
+        subtab: segments[2]?.toLowerCase() || 'overview',
+        query,
+      };
+    }
+    return {
+      screen: 'science',
+      query,
+    };
+  }
+
+  // Store & Categories (Dedicated Page)
   if (root === 'store') {
     const subpage = segments[1]?.toLowerCase() || query.category || 'all';
     return {
@@ -63,6 +83,7 @@ export function parseRoute(rawHash?: string): RouteState {
     };
   }
 
+  // Contact & Concierge (Dedicated Page)
   if (root === 'contact') {
     return {
       screen: 'contact',
@@ -81,13 +102,15 @@ export function buildHash(route: RouteState): string {
     return '#/';
   }
 
-  if (route.screen === 'fuel') {
-    const subpage = route.subpage || 'cyberphysical';
-    let path = `#/science/${subpage}`;
-    if (subpage === 'cyberphysical' && route.subtab) {
-      path += `/${route.subtab}`;
+  if (route.screen === 'science' || route.screen === 'fuel') {
+    return '#/science';
+  }
+
+  if (route.screen === 'cyberphysical') {
+    if (route.subtab && route.subtab !== 'overview') {
+      return `#/cyber-physical/${route.subtab}`;
     }
-    return path;
+    return '#/cyber-physical';
   }
 
   if (route.screen === 'store') {
@@ -137,10 +160,28 @@ export const NAV_DESTINATIONS: NavDestination[] = [
     id: 'page-home',
     title: 'Home • Overview',
     category: 'Pages',
-    description: 'Hummingbird Fuel circadian architecture, micro-mist physics, and live calculator',
+    description: 'Circadian protocol architecture, micro-mist delivery physics, and interactive calculator',
     icon: 'home',
     route: { screen: 'home' },
     keywords: ['home', 'overview', 'landing', 'main', 'intro']
+  },
+  {
+    id: 'page-science',
+    title: 'Science • Sublingual Cellular Delivery',
+    category: 'Pages',
+    description: 'Direct lingual venous conduit vs. hepatic first-pass loss, AM/PM matrices, and wearable telemetry',
+    icon: 'biotech',
+    route: { screen: 'science' },
+    keywords: ['science', 'sublingual', 'mucosa', 'absorption', 'delivery', 'bioavailability', 'formulations']
+  },
+  {
+    id: 'page-cyberphysical',
+    title: 'Cyber-Physical Systems & Clinical Explorer',
+    category: 'Pages',
+    description: 'Closed-loop Bateman PK/PD simulator, ISF sensors, McCarthy 2025 RCT, ADHD/oncology, and FDA engine',
+    icon: 'memory',
+    route: { screen: 'cyberphysical', subtab: 'overview' },
+    keywords: ['cyber-physical', 'pk/pd', 'clinical', 'bateman', 'simulator', 'fda', 'mccarthy', 'hardware']
   },
   {
     id: 'page-store',
@@ -152,15 +193,6 @@ export const NAV_DESTINATIONS: NavDestination[] = [
     keywords: ['store', 'shop', 'order', 'buy', 'catalog', 'products', 'price']
   },
   {
-    id: 'page-science',
-    title: 'Science Hub',
-    category: 'Pages',
-    description: 'Cyber-Physical PK/PD clinical exploration & sublingual cellular delivery',
-    icon: 'science',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' },
-    keywords: ['science', 'clinical', 'research', 'biology', 'pharmacokinetics']
-  },
-  {
     id: 'page-contact',
     title: 'Contact Biohacker Clinical Concierge',
     category: 'Pages',
@@ -170,78 +202,66 @@ export const NAV_DESTINATIONS: NavDestination[] = [
     keywords: ['contact', 'support', 'help', 'email', 'concierge', 'advisory']
   },
 
-  // Science Subpage 01 - Cyber-Physical PK/PD Systems
+  // Cyber-Physical Sub-Modules
   {
-    id: 'sci-cp-overview',
-    title: 'Science > Cyber-Physical > Overview & Reality Matrix',
-    category: 'Science Subpages',
+    id: 'cp-overview',
+    title: 'Cyber-Physical > Overview & Reality Matrix',
+    category: 'Cyber-Physical Modules',
     description: '6-dimension matrix comparing 2026 Wearable Delivery vs true Cyber-Physical Systems',
     icon: 'grid_view',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'overview' },
+    route: { screen: 'cyberphysical', subtab: 'overview' },
     keywords: ['reality matrix', 'comparison', 'speculative', 'latency', 'cyber-physical', 'overview'],
-    badge: 'Clinical Matrix'
+    badge: 'Reality Matrix'
   },
   {
-    id: 'sci-cp-sensors',
-    title: 'Science > Cyber-Physical > Sensors & OS Ingestion',
-    category: 'Science Subpages',
+    id: 'cp-sensors',
+    title: 'Cyber-Physical > Sensors & OS Ingestion',
+    category: 'Cyber-Physical Modules',
     description: 'ISF microneedles vs optical PPG, 60m wake latency buffer, and SDNN vs RMSSD filtering',
     icon: 'sensors',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'ingestion' },
+    route: { screen: 'cyberphysical', subtab: 'ingestion' },
     keywords: ['sensors', 'isf', 'microneedle', 'ppg', 'latency', 'wake buffer', 'hrv', 'sdnn', 'rmssd'],
-    badge: 'Hardware Pipeline'
+    badge: 'Sensors'
   },
   {
-    id: 'sci-cp-simulator',
-    title: 'Science > Cyber-Physical > Bateman PK/PD Simulator',
-    category: 'Science Subpages',
+    id: 'cp-simulator',
+    title: 'Cyber-Physical > Bateman PK/PD Simulator',
+    category: 'Cyber-Physical Modules',
     description: 'Live interactive Bateman superposition curves, CYP1A2 genotypes, and Borbély UMP alertness',
     icon: 'query_stats',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'algorithm' },
+    route: { screen: 'cyberphysical', subtab: 'algorithm' },
     keywords: ['bateman', 'simulator', 'pk/pd', 'pharmacokinetics', 'cyp1a2', 'genotype', 'alertness', 'borbely', 'curve'],
     badge: 'Live Simulator'
   },
   {
-    id: 'sci-cp-spray',
-    title: 'Science > Cyber-Physical > McCarthy 2025 Hardware & Spray Kinetics',
-    category: 'Science Subpages',
+    id: 'cp-spray',
+    title: 'Cyber-Physical > McCarthy 2025 Hardware & Spray Kinetics',
+    category: 'Cyber-Physical Modules',
     description: 'McCarthy et al. 2025 double-blind RCT trial results and sub-5-micron piezoelectric actuation',
     icon: 'air',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'delivery' },
+    route: { screen: 'cyberphysical', subtab: 'delivery' },
     keywords: ['spray', 'mccarthy', 'rct', 'trial', 'piezoelectric', 'solenoid', 'droplet', 'dv50', 'kinetics'],
-    badge: 'Trial Data'
+    badge: 'McCarthy Hardware'
   },
   {
-    id: 'sci-cp-clinical',
-    title: 'Science > Cyber-Physical > Clinical Verticals (ADHD & Oncology)',
-    category: 'Science Subpages',
+    id: 'cp-clinical',
+    title: 'Cyber-Physical > Clinical Verticals (ADHD & Oncology)',
+    category: 'Cyber-Physical Modules',
     description: 'ADHD tachyphylaxis vs steady micro-titration & oncology circadian chronotherapy gating',
-    icon: 'biotech',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'clinical' },
+    icon: 'healing',
+    route: { screen: 'cyberphysical', subtab: 'clinical' },
     keywords: ['adhd', 'oncology', 'cancer', 'chronotherapy', 'tachyphylaxis', 'methylphenidate', 'clinical'],
     badge: 'Clinical Verticals'
   },
   {
-    id: 'sci-cp-regulatory',
-    title: 'Science > Cyber-Physical > 2026 FDA Section 520(o) Engine',
-    category: 'Science Subpages',
+    id: 'cp-regulatory',
+    title: 'Cyber-Physical > 2026 FDA Section 520(o) Engine',
+    category: 'Cyber-Physical Modules',
     description: 'Interactive FDA regulatory diagnostic engine under 21st Century Cures Act & SaMD rules',
     icon: 'gavel',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'regulatory' },
+    route: { screen: 'cyberphysical', subtab: 'regulatory' },
     keywords: ['fda', 'regulatory', 'section 520', 'cures act', 'samd', 'combination product', '510k', 'law'],
-    badge: 'Regulatory Engine'
-  },
-
-  // Science Subpage 02 - Sublingual Bio-Delivery
-  {
-    id: 'sci-deliv-bio',
-    title: 'Science > Sublingual Delivery > Lingual Venous Absorption',
-    category: 'Science Subpages',
-    description: '90-second lingual capillary uptake bypassing hepatic first-pass metabolism',
-    icon: 'bolt',
-    route: { screen: 'fuel', subpage: 'delivery' },
-    keywords: ['sublingual', 'mucosa', 'absorption', 'first pass', 'liver', 'bioavailability', 'vein'],
-    badge: 'Bio-Delivery'
+    badge: 'FDA Engine'
   },
 
   // Store Subpages & Categories
@@ -303,7 +323,7 @@ export const NAV_DESTINATIONS: NavDestination[] = [
     category: 'Interactive Tools',
     description: 'Simulate high-velocity acoustic micro-droplet plume physics in real time',
     icon: 'stream',
-    route: { screen: 'fuel', subpage: 'cyberphysical', subtab: 'delivery' },
+    route: { screen: 'cyberphysical', subtab: 'delivery' },
     keywords: ['spray demo', 'mist simulator', 'droplet animation', 'spray test', 'plume']
   },
   {
