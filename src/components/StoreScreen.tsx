@@ -117,20 +117,27 @@ export const StoreScreen: React.FC<StoreScreenProps> = ({
     onAddToCart(customBundleProduct, false, 1);
   };
 
-  // Filter products for the bottom warehouse section
-  const filteredProducts = products.filter((p) => {
-    let matchesCategory = true;
-    if (selectedFilter === 'systems') matchesCategory = p.category === 'kit';
-    else if (selectedFilter === 'day') matchesCategory = p.category === 'day';
-    else if (selectedFilter === 'night') matchesCategory = p.category === 'night';
-    else if (selectedFilter === 'refills') matchesCategory = p.category === 'accessory';
+  // Filter and sort products for the bottom warehouse section
+  const filteredProducts = products
+    .filter((p) => {
+      let matchesCategory = true;
+      if (selectedFilter === 'systems' || selectedFilter === 'kit') matchesCategory = p.category === 'kit';
+      else if (selectedFilter === 'day') matchesCategory = p.category === 'day';
+      else if (selectedFilter === 'night') matchesCategory = p.category === 'night';
+      else if (selectedFilter === 'refills' || selectedFilter === 'accessory') matchesCategory = p.category === 'accessory';
 
-    const matchesSearch =
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch =
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesCategory && matchesSearch;
-  });
+      return matchesCategory && matchesSearch;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'price-asc') return a.price - b.price;
+      if (sortBy === 'price-desc') return b.price - a.price;
+      if (sortBy === 'rating') return b.rating - a.rating;
+      return 0; // featured
+    });
 
   return (
     <div className="w-full bg-[#0e0e10] text-[#e5e1e4] relative overflow-hidden">
@@ -184,19 +191,19 @@ export const StoreScreen: React.FC<StoreScreenProps> = ({
             {/* Category Chips */}
             <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none">
               {[
-                { id: 'all', label: `All Formulations (${products.length})` },
-                { id: 'systems', label: 'Circadian Systems' },
-                { id: 'day', label: 'Day Protocols (Ignite)' },
-                { id: 'night', label: 'Night Protocols (Delta Sleep)' },
-                { id: 'refills', label: 'Hardware & Refills' }
+                { id: 'all', label: `ALL FORMULATIONS (${products.length})` },
+                { id: 'systems', label: 'CIRCADIAN SYSTEMS' },
+                { id: 'day', label: 'DAY PROTOCOLS (IGNITE)' },
+                { id: 'night', label: 'NIGHT PROTOCOLS (DELTA SLEEP)' },
+                { id: 'refills', label: 'HARDWARE & REFILLS' }
               ].map((btn) => (
                 <button
                   key={btn.id}
                   onClick={() => setSelectedFilter(btn.id)}
-                  className={`px-4 py-2 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-4 py-2 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer border ${
                     selectedFilter === btn.id
-                      ? 'bg-[#2a2a2c] text-[#e5e1e4] font-bold border border-[#ff5a1f]/50 shadow-sm'
-                      : 'bg-[#1c1b1d] hover:bg-[#201f21] text-[#8d90a5] hover:text-[#e5e1e4] border border-[#282a36]'
+                      ? 'border-[#ff5a1f] bg-[#1c1b1d] text-[#e5e1e4] font-bold shadow-[0_0_15px_rgba(255,90,31,0.2)]'
+                      : 'border-[#282a36] bg-[#121318] text-[#8d90a5] hover:text-[#e5e1e4] hover:bg-[#1c1b1d]'
                   }`}
                 >
                   {btn.label}
@@ -1112,6 +1119,52 @@ export const StoreScreen: React.FC<StoreScreenProps> = ({
             <span className="material-symbols-outlined absolute left-2.5 top-2.5 text-[#8d90a5] text-[16px]">
               search
             </span>
+          </div>
+        </div>
+
+        {/* Category Filter Tabs matching image_d5640752 */}
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#282a36] pb-4 mb-8">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1">
+            {[
+              { id: 'all', label: `ALL FORMULATIONS (${products.length})` },
+              { id: 'systems', label: 'CIRCADIAN SYSTEMS' },
+              { id: 'day', label: 'DAY PROTOCOLS (IGNITE)' },
+              { id: 'night', label: 'NIGHT PROTOCOLS (DELTA SLEEP)' },
+              { id: 'refills', label: 'HARDWARE & REFILLS' }
+            ].map((btn) => (
+              <button
+                key={btn.id}
+                onClick={() => setSelectedFilter(btn.id)}
+                className={`px-4 py-2 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer border ${
+                  selectedFilter === btn.id
+                    ? 'border-[#ff5a1f] bg-[#1c1b1d] text-[#e5e1e4] font-bold shadow-[0_0_15px_rgba(255,90,31,0.2)]'
+                    : 'border-[#282a36] bg-[#121318] text-[#8d90a5] hover:text-[#e5e1e4] hover:bg-[#1c1b1d]'
+                }`}
+              >
+                {btn.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="font-['JetBrains_Mono'] text-xs text-[#8d90a5] hidden sm:inline">
+              SORT BY TELEMETRY:
+            </span>
+            <div className="relative inline-block w-48">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full appearance-none bg-[#1c1b1d] text-[#e5e1e4] font-['JetBrains_Mono'] text-xs px-4 py-2 rounded-lg border border-[#282a36] focus:outline-none focus:border-[#ff5a1f] cursor-pointer"
+              >
+                <option value="featured">Featured Protocol</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Top Rated (Clinical)</option>
+              </select>
+              <span className="material-symbols-outlined absolute right-2.5 top-2 text-[#8d90a5] pointer-events-none text-[16px]">
+                expand_more
+              </span>
+            </div>
           </div>
         </div>
 

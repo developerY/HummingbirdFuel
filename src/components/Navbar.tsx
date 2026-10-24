@@ -121,28 +121,18 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#121318]/95 backdrop-blur-xl border-b border-[#282a36]/60 shadow-[0_1px_12px_rgba(0,0,0,0.6)]">
       <div className="h-20 w-full max-w-[1280px] mx-auto px-5 md:px-12 flex items-center justify-between gap-4">
-        {/* Brand & Badge Zone */}
-        <div className="flex items-center gap-4">
+        {/* Brand & Logo Zone */}
+        <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={() => handleNavigate({ screen: 'home' })}
-            className="flex items-center gap-2 cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5a1f] rounded"
+            className="flex items-center cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ff5a1f] rounded"
           >
             <img
               alt="Hummingbird Fuel Logo"
               className="h-8 w-auto object-contain"
               src="https://lh3.googleusercontent.com/aida/AEtjO1XLi-jZTCiky9IhQb5zJtiwBMYASXOAJz0tXIAmozXDKLUJR9cLuI8CkR9v8CmnnDSOL5OmSZBLwDpNBGBn_iYOzf24lBrOSrlImaJPdYgqQAw_CcUI92BTyL9nSgtF8Mx9Z-DyaAbWa4fQcSweeu-ngQpmAzUWVSwvatt8n4EKrLSGrb0SrvuBEiWR3sPY9gcv7YWSp7A_4gbLn0qemdhqZBrresFpKgqJd-hL6NCPM5DaHCMAU-z0gQ"
             />
-            <span className="font-['Space_Grotesk'] text-xl font-bold tracking-tight text-[#e5e1e4] hidden sm:inline-block">
-              HUMMINGBIRD<span className="text-[#ff5a1f]">.FUEL</span>
-            </span>
           </button>
-
-          <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1c1b1d] border border-[#282a36]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#ff5a1f] animate-pulse"></span>
-            <span className="font-['JetBrains_Mono'] text-[10px] text-[#e4beb3] uppercase tracking-widest">
-              AI Cyber-Physical Delivery
-            </span>
-          </div>
         </div>
 
         {/* Desktop Navigation Links with Subpage Mega Flyouts */}
@@ -319,9 +309,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>Science</span>
-                <span className="px-1.5 py-0.2 rounded bg-[#ff5a1f]/20 border border-[#ff5a1f]/40 text-[#ffb59e] text-[9px] font-['JetBrains_Mono'] uppercase tracking-wider">
-                  Subpages
-                </span>
                 <span
                   className={`material-symbols-outlined text-[18px] transition-transform duration-200 text-[#ffb59e] ${
                     scienceMenuOpen ? 'rotate-180 text-[#ff5a1f]' : ''

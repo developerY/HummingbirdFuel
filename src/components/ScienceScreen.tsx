@@ -53,59 +53,117 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#0e0e10] py-12 md:py-20 text-[#e5e1e4]">
+    <div className="w-full bg-[#0e0e10] py-8 md:py-14 text-[#e5e1e4]">
       <div className="w-full max-w-[1280px] mx-auto px-5 md:px-12">
-        {/* Top Subpage Navigation Switcher */}
-        <div className="mb-10 p-2 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            <button
-              onClick={() => handleSubpageSwitch('cyberphysical')}
-              className={`p-4 rounded-xl text-left transition-all cursor-pointer border ${
-                scienceSubpage === 'cyberphysical'
-                  ? 'bg-[#1c1b1d] border-[#ff5a1f] shadow-lg shadow-[#ff5a1f]/10'
-                  : 'bg-transparent border-transparent hover:bg-[#181920]'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1.5">
-                <span className={`text-[11px] font-['JetBrains_Mono'] uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold ${
-                  scienceSubpage === 'cyberphysical' ? 'bg-[#ff5a1f]/20 text-[#ff5a1f] border border-[#ff5a1f]/40' : 'text-[#8d90a5]'
-                }`}>
-                  Subpage 01 • Clinical Architecture
+        {/* Normal Tab Menu Navigation */}
+        <div className="mb-8 border-b border-[#282a36]">
+          {/* Primary Science Tabs */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 sm:gap-6 overflow-x-auto scrollbar-none">
+              <button
+                type="button"
+                onClick={() => handleSubpageSwitch('cyberphysical')}
+                className={`py-3.5 px-3 font-['Space_Grotesk'] text-base md:text-lg font-bold transition-all relative flex items-center gap-2 cursor-pointer border-b-2 whitespace-nowrap ${
+                  scienceSubpage === 'cyberphysical'
+                    ? 'border-[#ff5a1f] text-[#ff5a1f]'
+                    : 'border-transparent text-[#8d90a5] hover:text-[#e5e1e4]'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[20px]">memory</span>
+                <span>Cyber-Physical PK/PD Systems</span>
+                <span className="text-[10px] font-['JetBrains_Mono'] px-2 py-0.5 rounded-full bg-[#ff5a1f]/10 text-[#ffb59e] border border-[#ff5a1f]/30 font-semibold hidden md:inline-block">
+                  Sub-Menu (6)
                 </span>
-                <span className="material-symbols-outlined text-[20px] text-[#ffb59e]">memory</span>
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-lg md:text-xl font-bold text-[#e5e1e4]">
-                Cyber-Physical PK/PD Systems &amp; Clinical Reality Explorer
-              </h3>
-              <p className="font-['Manrope'] text-xs text-[#8d90a5] mt-1 leading-relaxed">
-                Closed-loop Bateman PK/PD simulator, sensor ingestion latency, McCarthy 2025 hardware, ADHD/oncology verticals, and 2026 FDA Section 520(o) engine.
-              </p>
-            </button>
+              </button>
 
-            <button
-              onClick={() => handleSubpageSwitch('delivery')}
-              className={`p-4 rounded-xl text-left transition-all cursor-pointer border ${
-                scienceSubpage === 'delivery'
-                  ? 'bg-[#1c1b1d] border-[#00f0ff] shadow-lg shadow-[#00f0ff]/10'
-                  : 'bg-transparent border-transparent hover:bg-[#181920]'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1.5">
-                <span className={`text-[11px] font-['JetBrains_Mono'] uppercase tracking-widest px-2.5 py-0.5 rounded-full font-bold ${
-                  scienceSubpage === 'delivery' ? 'bg-[#00f0ff]/20 text-[#00f0ff] border border-[#00f0ff]/40' : 'text-[#8d90a5]'
-                }`}>
-                  Subpage 02 • Cellular Delivery
+              <button
+                type="button"
+                onClick={() => handleSubpageSwitch('delivery')}
+                className={`py-3.5 px-3 font-['Space_Grotesk'] text-base md:text-lg font-bold transition-all relative flex items-center gap-2 cursor-pointer border-b-2 whitespace-nowrap ${
+                  scienceSubpage === 'delivery'
+                    ? 'border-[#00f0ff] text-[#00f0ff]'
+                    : 'border-transparent text-[#8d90a5] hover:text-[#e5e1e4]'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[20px]">biotech</span>
+                <span>Sublingual Cellular Delivery</span>
+                <span className="text-[10px] font-['JetBrains_Mono'] px-2 py-0.5 rounded-full bg-[#00f0ff]/10 text-[#00f0ff] border border-[#00f0ff]/30 font-semibold hidden md:inline-block">
+                  Formulations
                 </span>
-                <span className="material-symbols-outlined text-[20px] text-[#00f0ff]">biotech</span>
-              </div>
-              <h3 className="font-['Space_Grotesk'] text-lg md:text-xl font-bold text-[#e5e1e4]">
-                Sublingual Bio-Delivery &amp; Active Matrices
-              </h3>
-              <p className="font-['Manrope'] text-xs text-[#8d90a5] mt-1 leading-relaxed">
-                90-second lingual venous bypass, elimination of hepatic first-pass loss, AM/PM molecular formulations, and human wearable telemetry data.
-              </p>
-            </button>
+              </button>
+            </div>
+
+            {/* Quick Share Link */}
+            <div className="flex items-center gap-2 pb-2 sm:pb-0">
+              <button
+                onClick={() => {
+                  const url = buildAbsoluteUrl({
+                    screen: 'fuel',
+                    subpage: scienceSubpage,
+                    subtab: scienceSubpage === 'cyberphysical' ? (activeSubtab || 'overview') : undefined,
+                  });
+                  navigator.clipboard.writeText(url);
+                  onShowToast?.(`Copied deep link: ${url}`);
+                }}
+                className="text-xs font-['JetBrains_Mono'] text-[#ffb59e] hover:text-[#ff5a1f] flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1c1b1d] border border-[#282a36] hover:border-[#ff5a1f]/40 transition-all cursor-pointer shrink-0"
+              >
+                <span className="material-symbols-outlined text-[15px]">share</span>
+                <span className="hidden sm:inline">Share Tab</span>
+              </button>
+            </div>
           </div>
+
+          {/* Sub Menu for Sublingual Delivery */}
+          {scienceSubpage === 'delivery' && (
+            <div className="flex items-center gap-2 py-3 overflow-x-auto scrollbar-none font-['JetBrains_Mono'] text-xs border-t border-[#282a36]/50 mt-1">
+              <span className="text-[#8d90a5] text-[11px] uppercase tracking-wider mr-1 shrink-0">Sub-Menu:</span>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('pk-curve');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+              >
+                01. PK Absorption Curve
+              </button>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('venous-route');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+              >
+                02. Venous Route vs. Liver
+              </button>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('active-matrix');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+              >
+                03. Dual Molecular Matrix
+              </button>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('clinical-telemetry');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+              >
+                04. Wearable Telemetry
+              </button>
+              <button
+                onClick={() => {
+                  const el = document.getElementById('clinical-citations');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-3 py-1 rounded-md bg-[#16171d] hover:bg-[#20212b] text-[#e4beb3]/80 hover:text-[#ff5a1f] border border-[#282a36] transition-colors whitespace-nowrap cursor-pointer"
+              >
+                05. Peer References
+              </button>
+            </div>
+          )}
         </div>
 
         {scienceSubpage === 'cyberphysical' ? (
@@ -136,7 +194,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
             </div>
 
         {/* SECTION 1: Interactive Pharmacokinetic Absorption Curve */}
-        <div className="p-6 md:p-10 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl mb-16">
+        <div id="pk-curve" className="p-6 md:p-10 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl mb-16 scroll-mt-24">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div>
               <span className="font-['JetBrains_Mono'] text-xs text-[#ffb59e] uppercase tracking-wider block mb-1">
@@ -268,7 +326,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
         </div>
 
         {/* SECTION 2: Anatomical Delivery Comparison (Sublingual vs Gastric) */}
-        <div className="mb-16">
+        <div id="venous-route" className="mb-16 scroll-mt-24">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="font-['JetBrains_Mono'] text-xs text-[#ffb77f] uppercase tracking-widest font-semibold block mb-2">
               ANATOMICAL TRANSPORT ROUTE
@@ -347,7 +405,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
         </div>
 
         {/* SECTION 3: Biochemical Formulation Breakdown (AM vs PM) */}
-        <div className="mb-16">
+        <div id="active-matrix" className="mb-16 scroll-mt-24">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
               <span className="font-['JetBrains_Mono'] text-xs text-[#ffb59e] uppercase tracking-widest font-semibold block mb-1">
@@ -468,7 +526,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
         </div>
 
         {/* SECTION 4: Clinical Wearable Telemetry Outcomes */}
-        <div className="p-8 md:p-12 rounded-3xl bg-[#121318] border border-[#282a36] shadow-xl mb-16">
+        <div id="clinical-telemetry" className="p-8 md:p-12 rounded-3xl bg-[#121318] border border-[#282a36] shadow-xl mb-16 scroll-mt-24">
           <div className="max-w-2xl mb-8">
             <span className="font-['JetBrains_Mono'] text-xs text-[#ffb59e] uppercase tracking-widest font-semibold block mb-1">
               OBSERVATIONAL HUMAN TELEMETRY
@@ -509,7 +567,7 @@ export const ScienceScreen: React.FC<ScienceScreenProps> = ({
         </div>
 
         {/* SECTION 5: Peer-Reviewed Scientific References */}
-        <div className="p-8 rounded-2xl bg-[#1c1b1d] border border-[#282a36] mb-16">
+        <div id="clinical-citations" className="p-8 rounded-2xl bg-[#1c1b1d] border border-[#282a36] mb-16 scroll-mt-24">
           <h3 className="font-['Space_Grotesk'] text-xl font-bold text-[#e5e1e4] mb-4 flex items-center gap-2">
             <span className="material-symbols-outlined text-[#ff5a1f] text-[22px]">menu_book</span>
             <span>Clinical Literature &amp; Pharmacokinetic Citations</span>

@@ -168,39 +168,35 @@ export const CyberPhysicalScienceSubpage: React.FC<CyberPhysicalScienceSubpagePr
   }, [regCompound, regSensor, regRecipient, regPharma]);
 
   return (
-    <div className="w-full space-y-8 animate-fadeIn">
-      {/* Subpage Banner Header */}
-      <div className="p-6 md:p-8 rounded-2xl bg-[#121318] border border-[#282a36] shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#00f0ff]/10 rounded-full blur-3xl pointer-events-none"></div>
-
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#ff5a1f]/20 border border-[#ff5a1f]/40 flex items-center justify-center text-[#ff5a1f] text-xl font-bold">
-              🧬
+    <div className="w-full space-y-6 animate-fadeIn">
+      {/* Subpage Header & Sub-Menu Bar */}
+      <div>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#121318] border border-[#282a36] text-[#ffb59e] font-['JetBrains_Mono'] text-xs uppercase tracking-widest mb-2">
+              <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
+              2026 Engineering &amp; Clinical Reality Standard
             </div>
-            <div>
-              <h2 className="font-['Space_Grotesk'] text-2xl md:text-3xl font-bold text-[#e5e1e4]">
-                Hummingbird Fuel Architecture &amp; Clinical Explorer
-              </h2>
-              <p className="font-['JetBrains_Mono'] text-xs text-[#00f0ff]">
-                Cyber-Physical PK/PD Systems • 2026 Regulatory &amp; Engineering Standard
-              </p>
-            </div>
+            <h2 className="font-['Space_Grotesk'] text-2xl sm:text-3xl font-bold text-[#e5e1e4]">
+              Cyber-Physical Systems &amp; Clinical Explorer
+            </h2>
           </div>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1c1b1d] border border-[#282a36] text-[11px] font-['JetBrains_Mono'] text-[#ffb59e]">
-            <span className="w-2 h-2 rounded-full bg-[#ff5a1f] animate-pulse"></span>
-            ZoeWave / YLabZ System Report
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1c1b1d] border border-[#282a36] text-[11px] font-['JetBrains_Mono'] text-[#ffb59e] self-start md:self-auto">
+            ZoeWave / YLabZ Architecture
           </span>
         </div>
 
-        <p className="font-['Manrope'] text-xs sm:text-sm text-[#e4beb3]/80 max-w-4xl leading-relaxed">
+        <p className="font-['Manrope'] text-xs sm:text-sm text-[#e4beb3]/80 max-w-4xl leading-relaxed mb-6">
           This technical specification deconstructs the gap between consumer wellness marketing concepts and the engineering, physiological, and regulatory boundaries of clinical closed-loop microdosing platforms.
         </p>
 
-        {/* Subpage Tabs Navigation */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-6 border-t border-[#282a36]/60 mt-6">
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
+        {/* Clean Standard Sub-Menu Tabs Navigation */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-1.5 rounded-xl bg-[#121318] border border-[#282a36] mb-6">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
+            <span className="text-[11px] font-['JetBrains_Mono'] uppercase tracking-wider text-[#8d90a5] px-2 hidden lg:inline">
+              Sub-Menu:
+            </span>
             {[
               { id: 'overview', label: '📊 Reality Matrix' },
               { id: 'ingestion', label: '📡 Sensors & Pipeline' },
@@ -212,10 +208,10 @@ export const CyberPhysicalScienceSubpage: React.FC<CyberPhysicalScienceSubpagePr
               <button
                 key={tab.id}
                 onClick={() => handleSelectTab(tab.id as CyberPhysicalSubTab)}
-                className={`px-3.5 py-2 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg font-['JetBrains_Mono'] text-xs uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer ${
                   activeSubTab === tab.id
                     ? 'bg-[#ff5a1f] text-[#0e0e10] font-bold shadow-md'
-                    : 'bg-[#1c1b1d] text-[#8d90a5] hover:text-[#e5e1e4] hover:bg-[#201f21] border border-[#282a36]'
+                    : 'text-[#8d90a5] hover:text-[#e5e1e4] hover:bg-[#1c1b1d]'
                 }`}
               >
                 {tab.label}
@@ -227,7 +223,7 @@ export const CyberPhysicalScienceSubpage: React.FC<CyberPhysicalScienceSubpagePr
             <button
               onClick={() => onCopyDeepLink(activeSubTab)}
               title="Copy deep link URL directly to this specific clinical subtab"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1c1b1d] border border-[#ff5a1f]/30 hover:border-[#ff5a1f] text-[#ffb59e] hover:text-[#ff8a00] text-xs font-['JetBrains_Mono'] shrink-0 cursor-pointer transition-all self-end sm:self-auto"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1c1b1d] border border-[#282a36] hover:border-[#ff5a1f] text-[#ffb59e] hover:text-[#ff8a00] text-xs font-['JetBrains_Mono'] shrink-0 cursor-pointer transition-all self-end sm:self-auto"
             >
               <span className="material-symbols-outlined text-[15px]">link</span>
               <span>Copy Section Link</span>
